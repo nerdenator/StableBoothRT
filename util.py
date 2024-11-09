@@ -36,27 +36,57 @@ from diffusers import (AutoPipelineForImage2Image, StableDiffusionControlNetPipe
 #### IMPORTANT FILE LOCATIONS [MODIFY THESE]
 ########
 
-## SD 1.5 Models
-LCM_Dv7_MODEL_LOCATION        = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7' #
-LCM_Dv8_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/"
+# ## SD 1.5 Models
+# LCM_Dv7_MODEL_LOCATION        = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7' #
+# LCM_Dv8_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/"
 
-CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
+# CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
+
+# ## SDXL Models
+# SDXLTURBO_MODEL_LOCATION      = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo'
+# SDXLL_MODEL_LOCATION          = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning"
+# SDXL_BASEMODEL_LOCATION       = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0"
+# SDXLL_CKPT_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
+# SDXL_CANNY_CONTROLNET_LOCATION=  "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0"
+
+# ## SDXS 
+# SDXS_MODEL_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/"
+# CONTROLNET_SKETCH_LOCATION    = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/"
+
+
+# HYPERSD_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD"
+# HYPERSD_UNET_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors"
+# HYPERSD_LORA_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors"
+
+#### IMPORTANT WINDOWS LOCATIONS [MODIFY THESE]
+########
+
+## SD 1.5 Models
+LCM_Dv7_MODEL_LOCATION        = 'D:\\rmasiso\\PROJECTS\\AI\\models\\LCM_Dreamshaper_v7' #
+LCM_Dv8_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\dreamshaper-8"
+
+CONTROLNET_CANNY_LOCATION     = "D:\\rmasiso\\PROJECTS\\AI\\models\\control_v11p_sd15_canny"
 
 ## SDXL Models
-SDXLTURBO_MODEL_LOCATION      = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo'
-SDXLL_MODEL_LOCATION          = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning"
-SDXLL_BASEMODEL_LOCATION      = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0"
-SDXLL_CKPT_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
-SDXL_CANNY_CONTROLNET_LOCATION=  "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0"
+SDXLTURBO_MODEL_LOCATION      = 'D:\rmasiso\PROJECTS\AI\models\sdxl-turbo'
+SDXLL_MODEL_LOCATION          = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning"
+SDXL_BASEMODEL_LOCATION       = "F:\Projects\BuildStuff2024_RTSD\models\stable-diffusion-xl-base-1.0"
+SDXLL_CKPT_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning\sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
+SDXL_CANNY_CONTROLNET_LOCATION= "F:\Projects\BuildStuff2024_RTSD\models\controlnet-canny-sdxl-1.0"
 
 ## SDXS 
-SDXS_MODEL_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/"
-CONTROLNET_SKETCH_LOCATION    = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/"
+SDXS_MODEL_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper"
+CONTROLNET_SKETCH_LOCATION    = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper-sketch"
 
 
-HYPERSD_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD"
-HYPERSD_UNET_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors"
-HYPERSD_LORA_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors"
+HYPERSD_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD"
+HYPERSD_UNET_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-Unet.safetensors"
+HYPERSD_LORA_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-lora.safetensors"
+
+SDXL_LCM_LORA_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\lcm-lora-sdxl"
+SDXL_PAPERCUT_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Papercut_SDXL"
+SDXL_MIDJOURNEYV16_LOCATION   = "F:\Projects\BuildStuff2024_RTSD\models\Midjourney-V6.1"
+SDXL_AAM_XL_ANIMEMIX_LOCATION = "F:\Projects\BuildStuff2024_RTSD\models\AAM_XL_AnimeMix"
 
 
 AVAILABLE_MODELS = ["cartoon", 
@@ -67,7 +97,11 @@ AVAILABLE_MODELS = ["cartoon",
                     "Dreamshaper_v8_LCM_img2img",
                     "SDXL_Turbo",
                     "SDXL_Lightning",
-                    
+                    "Hyper_SD",
+                    "SDXS",
+                    "Papercut_LCM-LoRA",
+                    "MidjourneyV1.6_LCM-LoRA",
+                    "AAM_XL_AnimeMix_LCM-LoRA",
                     ]
 
 #### OTHER CONSTANTS
@@ -93,7 +127,7 @@ IMAGE_EXTENSIONS       = ['.png', '.jpeg', '.jpg', '.gif', '.bmp', '.tiff', '.we
 IMAGE_GALLERY_HEIGHT   = 100 # resolution of images inside gallery
 
 DYNAMIC_PARAMETERS     = ["RANDOM_SEED", "PROMPT", "WIDTH",'HEIGHT',"SD_MARKDOWN",'GUIDANCE_SCALE','INFERENCE_STEPS','NOISE_STRENGTH',
-                            'CONDITIONING_SCALE','GUIDANCE_START',"GUIDANCE_END", "CANNY_MARKDOWN", "CANNY_LOWER", "CANNY_UPPER", "CANNY_APERTURE", "COLOR_INVERT"]
+                            'CONDITIONING_SCALE','GUIDANCE_START',"GUIDANCE_END", "CANNY_MARKDOWN", "CANNY_LOWER", "CANNY_UPPER", "CANNY_APERTURE", "COLOR_INVERT", "ETA"]
 
 
 DEFAULT_PROMPT         = "portrait of a minion, wearing goggles, yellow skin, wearing a beanie, despicable me movie, in the style of pixar movie" #van gogh in the style of van gogh"
@@ -120,6 +154,7 @@ PARAMETER_STATE        = {
                             "CANNY_HIGHER": 150,
                             "CANNY_APERTURE": 3,
                             "COLOR_INVERT": False,
+                            "ETA" : 1.0,
                           }
 
 
@@ -551,8 +586,7 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
 
         # pipeline = prepare_lcm_pipeline(CONTROLNET_CANNY_LOCATION, LCM_Dv7_MODEL_LOCATION, "canny")
 
-        controlnet = ControlNetModel.from_pretrained(CONTROLNET_CANNY_LOCATION, torch_dtype=TORCH_DTYPE,
-                                                         use_safetensors=True)
+        controlnet = ControlNetModel.from_pretrained(CONTROLNET_CANNY_LOCATION, torch_dtype=TORCH_DTYPE, use_safetensors=True)
         
         pipeline = StableDiffusionControlNetPipeline.from_pretrained(LCM_Dv7_MODEL_LOCATION, controlnet=controlnet, 
                                                         torch_dtype=TORCH_DTYPE, safety_checker=None).to(TORCH_DEVICE)
@@ -570,8 +604,7 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
 
         # pipeline = prepare_lcm_pipeline(CONTROLNET_CANNY_LOCATION, LCM_Dv7_MODEL_LOCATION, "canny")
 
-        controlnet = ControlNetModel.from_pretrained(CONTROLNET_CANNY_LOCATION, torch_dtype=TORCH_DTYPE,
-                                                         use_safetensors=True)
+        controlnet = ControlNetModel.from_pretrained(CONTROLNET_CANNY_LOCATION, torch_dtype=TORCH_DTYPE,use_safetensors=True)
         
         pipeline = StableDiffusionControlNetPipeline.from_pretrained(LCM_Dv8_MODEL_LOCATION, controlnet=controlnet, 
                                                         torch_dtype=TORCH_DTYPE, safety_checker=None).to(TORCH_DEVICE)
@@ -593,10 +626,10 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
 
         controlnet = ControlNetModel.from_pretrained(SDXL_CANNY_CONTROLNET_LOCATION, torch_dtype=TORCH_DTYPE)
     
-        unet       = UNet2DConditionModel.from_config(SDXLL_BASEMODEL_LOCATION, subfolder="unet").to(TORCH_DEVICE, TORCH_DTYPE)
+        unet       = UNet2DConditionModel.from_config(SDXL_BASEMODEL_LOCATION, subfolder="unet").to(TORCH_DEVICE, TORCH_DTYPE)
         unet.load_state_dict(load_file(SDXLL_CKPT_LOCATION, device=TORCH_DEVICE))
 
-        pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(SDXLL_BASEMODEL_LOCATION,\
+        pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(SDXL_BASEMODEL_LOCATION,\
                                                         controlnet=controlnet, 
                                                         unet=unet,\
                                                         torch_dtype=TORCH_DTYPE, safety_checker=None).\
@@ -604,7 +637,7 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
         
         pipeline.scheduler = EulerDiscreteScheduler.from_config(pipeline.scheduler.config, timestep_spacing="trailing")
 
-    elif model=="hypersd":
+    elif model=="Hyper_SD":
         controlnet = ControlNetModel.from_pretrained(SDXL_CANNY_CONTROLNET_LOCATION, torch_dtype=TORCH_DTYPE
                                                 )
         
@@ -622,7 +655,7 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
         # pipeline.scheduler = LCMScheduler.from_config(pipeline.scheduler.config)
 
         # FOR LORA
-        pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(SDXLL_BASEMODEL_LOCATION,\
+        pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(SDXL_BASEMODEL_LOCATION,\
                                                         controlnet=controlnet, 
                                                         # unet=unet,\
                                                         torch_dtype=TORCH_DTYPE, safety_checker=None).\
@@ -633,8 +666,52 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
         pipeline.fuse_lora()
         # Use TCD scheduler to achieve better image quality
         pipeline.scheduler = TCDScheduler.from_config(pipeline.scheduler.config)
+        
+        
+    elif model=="SDXS":
+        
+        controlnet = ControlNetModel.from_pretrained(CONTROLNET_SKETCH_LOCATION, torch_dtype=TORCH_DTYPE ) 
+        pipeline = StableDiffusionControlNetPipeline.from_pretrained(SDXS_MODEL_LOCATION, controlnet=controlnet, 
+                                                                 torch_dtype=TORCH_DTYPE, safety_checker=None).to(TORCH_DEVICE)
+        
+        
+    elif "LCM-LoRA" in model:
+        
+        if model=="Papercut_LCM-LoRA":
+            lora_location = SDXL_PAPERCUT_LOCATION
+            adapter_name = "papercut"
+            base_model_to_use = SDXL_BASEMODEL_LOCATION
+            use_adapter = True
+        elif model=="MidjourneyV1.6_LCM-LoRA":
+            lora_location = SDXL_MIDJOURNEYV16_LOCATION
+            adapter_name = "aidmaMidjourneyV61-v01"
+            base_model_to_use = SDXL_BASEMODEL_LOCATION
+            use_adapter = True
+        elif model == "AAM_XL_AnimeMix_LCM-LoRA":
+            base_model_to_use = SDXL_AAM_XL_ANIMEMIX_LOCATION
+            use_adapter=False
+                
+        controlnet = ControlNetModel.from_pretrained(SDXL_CANNY_CONTROLNET_LOCATION, torch_dtype=TORCH_DTYPE)
+        
 
+        pipeline = StableDiffusionXLControlNetPipeline.from_pretrained(base_model_to_use,\
+                                                        controlnet=controlnet, 
+                                                        # unet=unet,\
+                                                        torch_dtype=TORCH_DTYPE, safety_checker=None).\
+                                                    to(TORCH_DEVICE)
+                                                    
+        pipeline.scheduler = LCMScheduler.from_config(pipeline.scheduler.config)# Combine LoRAs
 
+        pipeline.load_lora_weights(SDXL_LCM_LORA_LOCATION, adapter_name="lcm")
+        
+        if use_adapter: 
+            pipeline.load_lora_weights(lora_location, adapter_name=adapter_name)
+            pipeline.set_adapters(["lcm", adapter_name], adapter_weights=[1.0, 1.0])# Combine LoRAs
+            pipeline.fuse_lora(adapter_names=["lcm", adapter_name], lora_scale=1.0)# fuse LoRAs and unload weights
+            # pipeline.unload_lora_weights()
+        else:
+            print("...not using extra adapter.")
+    
     else:
         pipeline=None
         
@@ -672,7 +749,9 @@ def run_lcm_img2img(pipeline, ref_image, generator):
     # global PARAMETER_STATE
 
     if pipeline is None:
-        raise ValueError("Pipeline is not initialized.")
+        # raise ValueError("Pipeline is not initialized. Using non-SD model.")
+        gen_image = ref_image 
+        
     # generator = prepare_seed()
 
     # gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
@@ -686,8 +765,8 @@ def run_lcm_img2img(pipeline, ref_image, generator):
     #                      control_guidance_start        = PARAMETER_STATE["GUIDANCE_START"], 
     #                      control_guidance_end          = PARAMETER_STATE["GUIDANCE_END"], 
     #                     ).images[0]
-    
-    gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
+    else:
+        gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
                          num_inference_steps           = PARAMETER_STATE['INFERENCE_STEPS'], 
                          guidance_scale                = PARAMETER_STATE["GUIDANCE_SCALE"],
                          width                         = PARAMETER_STATE["WIDTH"], 
@@ -732,9 +811,60 @@ def run_sdxl_lightning(pipeline, ref_image, generator):
     return gen_image
 
 
+def run_hyper_sd(pipeline, ref_image, generator):
+
+    gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
+                         num_inference_steps           = PARAMETER_STATE['INFERENCE_STEPS'], 
+                         guidance_scale                = PARAMETER_STATE["GUIDANCE_SCALE"],
+                         width                         = PARAMETER_STATE["WIDTH"], 
+                         height                        = PARAMETER_STATE["HEIGHT"], 
+                         generator                     = generator,
+                         image                         = ref_image,
+                         strength                      = PARAMETER_STATE["NOISE_STRENGTH"], 
+                         controlnet_conditioning_scale = PARAMETER_STATE["CONDITIONING_SCALE"], 
+                         control_guidance_start        = PARAMETER_STATE["GUIDANCE_START"], 
+                         control_guidance_end          = PARAMETER_STATE["GUIDANCE_END"], 
+                         eta                           = PARAMETER_STATE["ETA"],
+                        ).images[0]
+
+    return gen_image
+
+def run_sdxs(pipeline, ref_image, generator):
+    gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
+                         num_inference_steps           = PARAMETER_STATE['INFERENCE_STEPS'], 
+                         guidance_scale                = PARAMETER_STATE["GUIDANCE_SCALE"],
+                         width                         = PARAMETER_STATE["WIDTH"], 
+                         height                        = PARAMETER_STATE["HEIGHT"], 
+                         generator                     = generator,
+                         image                         = ref_image, 
+                         strength                      = PARAMETER_STATE["NOISE_STRENGTH"], 
+                         controlnet_conditioning_scale = PARAMETER_STATE["CONDITIONING_SCALE"], 
+                         control_guidance_start        = PARAMETER_STATE["GUIDANCE_START"], 
+                         control_guidance_end          = PARAMETER_STATE["GUIDANCE_END"], 
+                        ).images[0]
+    
+    return gen_image
+
+def run_lcm_lora(pipeline, ref_image, generator):
+
+    gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
+                         num_inference_steps           = PARAMETER_STATE['INFERENCE_STEPS'], 
+                         guidance_scale                = PARAMETER_STATE["GUIDANCE_SCALE"],
+                         width                         = PARAMETER_STATE["WIDTH"], 
+                         height                        = PARAMETER_STATE["HEIGHT"], 
+                         generator                     = generator,
+                         image                         = ref_image,
+                         strength                      = PARAMETER_STATE["NOISE_STRENGTH"], 
+                         controlnet_conditioning_scale = PARAMETER_STATE["CONDITIONING_SCALE"], 
+                         control_guidance_start        = PARAMETER_STATE["GUIDANCE_START"], 
+                         control_guidance_end          = PARAMETER_STATE["GUIDANCE_END"], 
+                        ).images[0]
+    
+    return gen_image
+
 def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_threshold, canny_aperture, color_invert, 
                   seed, prompt, width, height, guidance_scale, inference_steps, noise_strength, conditioning_scale,
-                    guidance_start, guidance_end):
+                    guidance_start, guidance_end, eta):
     """
     
     MASTER PROCESS FUNCTION
@@ -750,10 +880,11 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
     PARAMETER_STATE['PROMPT'] = prompt
     PARAMETER_STATE['GUIDANCE_SCALE'] = guidance_scale
     PARAMETER_STATE['INFERENCE_STEPS'] = inference_steps
-    PARAMETER_STATE['NOISE_STRENGTH'] = noise_strength
-    PARAMETER_STATE['CONDITIONING_SCALE'] = conditioning_scale
-    PARAMETER_STATE['GUIDANCE_START'] = guidance_start
-    PARAMETER_STATE["GUIDANCE_END"] = guidance_end
+    PARAMETER_STATE['NOISE_STRENGTH'] = float(noise_strength)
+    PARAMETER_STATE['CONDITIONING_SCALE'] = float(conditioning_scale)
+    PARAMETER_STATE['GUIDANCE_START'] = float(guidance_start)
+    PARAMETER_STATE["GUIDANCE_END"] = float(guidance_end)
+    PARAMETER_STATE["ETA"] = float(eta)
 
 
     generator = prepare_seed(seed)
@@ -800,12 +931,35 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
         image = convert_numpy_image_to_pil_image(image)
         image = run_sdxl_lightning(PIPELINE, image, generator)
         
+    elif model_selected == "Hyper_SD":
+        image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
+        image = convert_numpy_image_to_pil_image(image)
+        image = run_hyper_sd(PIPELINE, image, generator)
+        
+    elif model_selected == "SDXS":
+        image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
+        image = cv.bitwise_not(image) # sdxs sketch -- so needs to look like sketch!
+        image = convert_numpy_image_to_pil_image(image)
+        image = run_sdxs(PIPELINE, image, generator)
+        
+    elif model_selected=="Papercut_LCM-LoRA":
+        image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
+        image = convert_numpy_image_to_pil_image(image)
+        image = run_lcm_lora(PIPELINE, image, generator)
+    elif model_selected=="MidjourneyV1.6_LCM-LoRA":
+        image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
+        image = convert_numpy_image_to_pil_image(image)
+        image = run_lcm_lora(PIPELINE, image, generator)
+    elif model_selected=="AAM_XL_AnimeMix_LCM-LoRA":
+        image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
+        image = convert_numpy_image_to_pil_image(image)
+        image = run_lcm_lora(PIPELINE, image, generator) 
     else:
         image = input_img
 
     # determine to invert colors
     if color_invert:
-        image = cv.bitwise_not(image)
+        image = cv.bitwise_not(np.array(image))
 
     ### FOR SDXS -->  cropped_image = cv.bitwise_not(cropped_image) if color_invert else cropped_image #send different canny image
 
@@ -846,10 +1000,10 @@ def list_printers():
         try:
             import win32print
         except ModuleNotFoundError:
-            print("win32print module not found. Installing pywin32...")
+            print("win32print module not found. Installing pywin32... (you may need to restart app.py)")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "pywin32"])
             import win32print
-        
+            
         printers = [printer[2] for printer in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL | win32print.PRINTER_ENUM_CONNECTIONS)]
         return printers
         

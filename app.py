@@ -81,13 +81,15 @@ with gr.Blocks(css=css) as demo:
                     stable_markdown  = gr.Markdown("### Stable Diffusion Model Settings")
                 with gr.Row():
                     seed             = gr.Slider(randomize=True, minimum=0, maximum=11023012000, label="Random Seed",step=1,interactive=True)
-                    guidance_scale   = gr.Slider(minimum=0, maximum=50, value= util.PARAMETER_STATE['GUIDANCE_SCALE'], label="Guidance Scale",step=1,interactive=True)            
+                    guidance_scale   = gr.Slider(minimum=0, maximum=50, value= util.PARAMETER_STATE['GUIDANCE_SCALE'], label="Guidance Scale",step=.1,interactive=True)            
                     inference_steps  = gr.Slider(minimum=0, maximum=20, value= util.PARAMETER_STATE['INFERENCE_STEPS'], label="Inference Steps",step=1,interactive=True)           
-                    noise_strength   = gr.Slider(minimum=0, maximum=3, value= util.PARAMETER_STATE['NOISE_STRENGTH'], label="Noise Strength",step=0.1,interactive=True)        
+                    noise_strength   = gr.Slider(minimum=0, maximum=1.0, value= util.PARAMETER_STATE['NOISE_STRENGTH'], label="Noise Strength",step=0.1,interactive=True)
+                    eta              = gr.Slider(minimum=0, maximum=10.0, value= util.PARAMETER_STATE['ETA'], label="eta",step=0.1,interactive=True)        
+        
                 with gr.Row():
-                    cond_scale       = gr.Slider(minimum=0, maximum=3, value= util.PARAMETER_STATE['CONDITIONING_SCALE'], label="Conditioning Scale",step=0.1,interactive=True) 
-                    guidance_start   = gr.Slider(minimum=0, maximum=3, value= util.PARAMETER_STATE['GUIDANCE_START'], label="Reference Guidance Start",step=0.1,interactive=True) 
-                    guidance_end     = gr.Slider(minimum=0, maximum=3, value= util.PARAMETER_STATE['GUIDANCE_END'], label="Reference Guidance End",step=0.1,interactive=True) 
+                    cond_scale       = gr.Slider(minimum=0., maximum=3, value= util.PARAMETER_STATE['CONDITIONING_SCALE'], label="Conditioning Scale",step=0.1,interactive=True) 
+                    guidance_start   = gr.Slider(minimum=0., maximum=1.0, value= util.PARAMETER_STATE['GUIDANCE_START'], label="Reference Guidance Start",step=0.1,interactive=True) 
+                    guidance_end     = gr.Slider(minimum=0., maximum=1.0, value= util.PARAMETER_STATE['GUIDANCE_END'], label="Reference Guidance End",step=0.1,interactive=True) 
 
     with gr.Row():
         prompt = gr.Textbox(max_lines=1, label="Edit Prompt",interactive=True,elem_id="prompt_textbox")
@@ -148,6 +150,7 @@ with gr.Blocks(css=css) as demo:
         cond_scale,      
         guidance_start,   
         guidance_end, 
+        eta,
                 ]
     outputs = [output_img]
     
@@ -169,7 +172,8 @@ with gr.Blocks(css=css) as demo:
                                                                                     canny_lower_threshold,
                                                                                     canny_upper_threshold,
                                                                                     canny_aperture,
-                                                                                    color_invert] )
+                                                                                    color_invert,
+                                                                                    eta] )
     
 
     # seed.change(fn=process_image,inputs=inputs, outputs=outputs) # works

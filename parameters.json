@@ -19,13 +19,14 @@
         "CANNY_LOWER"                   : [50, true, true],
         "CANNY_UPPER"                   : [150, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
-        "COLOR_INVERT"                  : [false, true, true]
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "Dreamshaper_v7_LCM_Canny": {
         "MODEL NOTES"                   : "This is an LCM model, ",
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "PROMPT"                        : ["pirates", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
         "GUIDANCE_SCALE"                : [3, true, true],
         "INFERENCE_STEPS"               : [2, true, true],
@@ -38,19 +39,20 @@
         "WIDTH"                         : [512, true, true],
         "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", true, true],
         "CANNY_LOWER"                   : [50, true, true],
-        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_UPPER"                   : [95, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
-        "COLOR_INVERT"                  : [false, true, true]
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "Dreamshaper_v7_LCM_img2img": {
         "MODEL NOTES"                   : "This is an LCM model, ",
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "PROMPT"                        : ["michelangelo white marble stone sculpture of a latin man", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
         "GUIDANCE_SCALE"                : [7, true, true],
         "INFERENCE_STEPS"               : [2, true, true],
-        "NOISE_STRENGTH"                : [0.4, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
         "CONDITIONING_SCALE"            : [0.8, false, false],
         "GUIDANCE_START"                : [0.0, false, false],
         "GUIDANCE_END"                  : [1.0, false, false],
@@ -61,18 +63,19 @@
         "CANNY_LOWER"                   : [50, false, false],
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
-        "COLOR_INVERT"                  : [false, false, false]
+        "COLOR_INVERT"                  : [false, false, false],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "Dreamshaper_v8_LCM_Canny": {
         "MODEL NOTES"                   : "This is an LCM model, ",
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "PROMPT"                        : ["pirates", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
         "GUIDANCE_SCALE"                : [3, true, true],
         "INFERENCE_STEPS"               : [2, true, true],
         "NOISE_STRENGTH"                : [0.7, true, true],
-        "CONDITIONING_SCALE"            : [0.8, true, true],
+        "CONDITIONING_SCALE"            : [1.0, true, true],
         "GUIDANCE_START"                : [0.0, true, true],
         "GUIDANCE_END"                  : [1.0, true, true],
         "RANDOM_SEED"                   : [21, true, true],
@@ -80,77 +83,189 @@
         "WIDTH"                         : [512, true, true],
         "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", true, true],
         "CANNY_LOWER"                   : [50, true, true],
-        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_UPPER"                   : [95, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
-        "COLOR_INVERT"                  : [false, true, true]
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "Dreamshaper_v8_LCM_img2img": {
         "MODEL NOTES"                   : "This is an LCM model, ",
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "PROMPT"                        : ["skeletons", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
-        "GUIDANCE_SCALE"                : [7, true, true],
-        "INFERENCE_STEPS"               : [2, true, true],
+        "GUIDANCE_SCALE"                : [2.5, true, true],
+        "INFERENCE_STEPS"               : [10, true, true],
         "NOISE_STRENGTH"                : [0.4, true, true],
         "CONDITIONING_SCALE"            : [0.8, false, false],
         "GUIDANCE_START"                : [0.0, false, false],
         "GUIDANCE_END"                  : [1.0, false, false],
-        "RANDOM_SEED"                   : [21, true, true],
+        "RANDOM_SEED"                   : [4359688591, true, true],
         "HEIGHT"                        : [512, true, true], 
         "WIDTH"                         : [512, true, true],
         "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
         "CANNY_LOWER"                   : [50, false, false],
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
-        "COLOR_INVERT"                  : [false, false, false]
+        "COLOR_INVERT"                  : [false, false, false],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "SDXL_Turbo": {
         "MODEL NOTES"                   : "This is an LCM model, ",    
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "PROMPT"                        : ["human tiger wearing clothing", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
         "GUIDANCE_SCALE"                : [0, true, false],
-        "INFERENCE_STEPS"               : [2, true, true],
-        "NOISE_STRENGTH"                : [0.5, true, true],
+        "INFERENCE_STEPS"               : [6, true, true],
+        "NOISE_STRENGTH"                : [0.8, true, true],
         "CONDITIONING_SCALE"            : [null, false, false],
         "GUIDANCE_START"                : [null, false, false],
         "GUIDANCE_END"                  : [null, false, false],
-        "RANDOM_SEED"                   : [21, true, true],
+        "RANDOM_SEED"                   : [7576985446, true, true],
         "HEIGHT"                        : [512, true, true],
         "WIDTH"                         : [512, true, true],
         "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
         "CANNY_LOWER"                   : [50, false, false],
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
-        "COLOR_INVERT"                  : [false, false, false]
+        "COLOR_INVERT"                  : [false, false, false],
+        "ETA"                           : [1.0, false, false]
 
     },
 
 
     "SDXL_Lightning": {
-        "MODEL NOTES"                   : "This is an LCM model, ",    
-        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "MODEL NOTES"                   : "This is SDXL Lightning - Optimized for 1024x1024",    
+        "PROMPT"                        : ["latino minion in a club in color neon club retro disco lights", true, true],
         "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
         "GUIDANCE_SCALE"                : [0, true, false],
         "INFERENCE_STEPS"               : [2, true, true],
-        "NOISE_STRENGTH"                : [0.5, true, true],
-        "CONDITIONING_SCALE"            : [0.8, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, false],
+        "CONDITIONING_SCALE"            : [0.4, true, true],
         "GUIDANCE_START"                : [0.0, true, true],
         "GUIDANCE_END"                  : [1.0, true, true],
-        "RANDOM_SEED"                   : [21, true, true],
+        "RANDOM_SEED"                   : [3635796798, true, true],
+        "HEIGHT"                        : [1024, true, true],
+        "WIDTH"                         : [1024, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [73, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, false, false],
+        "ETA"                           : [1.0, false, false]
+
+    },
+
+    "Hyper_SD": {
+        "MODEL NOTES"                   : "This is Hyper SD - Optimized for 1024x1024",    
+        "PROMPT"                        : ["latino minion in a club in color neon club retro disco lights", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [0, true, false],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, false],
+        "CONDITIONING_SCALE"            : [0.4, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [3635796798, true, true],
+        "HEIGHT"                        : [1024, true, true],
+        "WIDTH"                         : [1024, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [73, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, false, false],
+        "ETA"                           : [1.0, true, true]
+
+    },
+
+    "SDXS": {
+        "MODEL NOTES"                   : "This is SDXS - Optimized for 512x512",    
+        "PROMPT"                        : ["neonpunk style of a man . 35mm photograph, film, bokeh, professional, 4k, highly detailed", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [0, true, false],
+        "INFERENCE_STEPS"               : [1, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, false],
+        "CONDITIONING_SCALE"            : [0.6, true, true],
+        "GUIDANCE_START"                : [0.0, true, false],
+        "GUIDANCE_END"                  : [1.0, true, false],
+        "RANDOM_SEED"                   : [3635796798, true, true],
         "HEIGHT"                        : [512, true, true],
         "WIDTH"                         : [512, true, true],
         "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
         "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [73, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
+
+    },
+
+    "Papercut_LCM-LoRA": {
+        "MODEL NOTES"                   : "This is Papercut. Better results at 1024x1024",    
+        "PROMPT"                        : ["papercut children's book fantasy world, highly detailed, textured paper", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [1, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
+        "CONDITIONING_SCALE"            : [0.5, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [3635796798, true, true],
+        "HEIGHT"                        : [512, true, true],
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [60, true, true],
         "CANNY_UPPER"                   : [150, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
-        "COLOR_INVERT"                  : [false, false, false]
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
+
+    },
+    "MidjourneyV1.6_LCM-LoRA": {
+        "MODEL NOTES"                   : "This is Midjourney V1.6. Better results at 1024x1024",    
+        "PROMPT"                        : ["midjourneyv6.1 children's book fantasy world, highly detailed, textured paper", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [1, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
+        "CONDITIONING_SCALE"            : [0.5, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [3635796798, true, true],
+        "HEIGHT"                        : [512, true, true],
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [60, true, true],
+        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
+
+    },
+    "AAM_XL_AnimeMix_LCM-LoRA": {
+        "MODEL NOTES"                   : "AAM XL Anime Mix. Better results at 1024x1024. Suggested CFG 5-7",    
+        "PROMPT"                        : ["children's book fantasy world, highly detailed, textured paper", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [0, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
+        "CONDITIONING_SCALE"            : [0.5, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [3635796798, true, true],
+        "HEIGHT"                        : [512, true, true],
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [53, true, true],
+        "CANNY_UPPER"                   : [103, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true],
+        "ETA"                           : [1.0, false, false]
 
     },
 
     "second key":"second value",
     "third key":"third value"
 
-  }
+}
