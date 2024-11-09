@@ -1,0 +1,156 @@
+{
+    "JSON_FILE_DESCRIPTION": [
+        "File is organized with arrays (e.g., x = [2, true, false]) where first entry indicates value, second entry indicates gradio visibility, and third value indicates interactability "
+    ],
+    "canny": {
+        "MODEL NOTES"                   : "This is an edge detector algorithm. ",
+        "PROMPT"                        : ["Minion with big giant goggles", true, false],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [3, false, false],
+        "INFERENCE_STEPS"               : [4, false, false],
+        "NOISE_STRENGTH"                : [0.7, false, false],
+        "CONDITIONING_SCALE"            : [0.8,false, false],
+        "GUIDANCE_START"                : [0.0,false, false],
+        "GUIDANCE_END"                  : [1.0,false, false],
+        "RANDOM_SEED"                   : [21, false, false],
+        "HEIGHT"                        : [512, true, true], 
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", true, true],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true]
+
+    },
+
+    "Dreamshaper_v7_LCM_Canny": {
+        "MODEL NOTES"                   : "This is an LCM model, ",
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [3, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.7, true, true],
+        "CONDITIONING_SCALE"            : [0.8, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true], 
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", true, true],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true]
+
+    },
+
+    "Dreamshaper_v7_LCM_img2img": {
+        "MODEL NOTES"                   : "This is an LCM model, ",
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [7, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.4, true, true],
+        "CONDITIONING_SCALE"            : [0.8, false, false],
+        "GUIDANCE_START"                : [0.0, false, false],
+        "GUIDANCE_END"                  : [1.0, false, false],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true], 
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, false, false],
+        "CANNY_UPPER"                   : [150, false, false], 
+        "CANNY_APERTURE"                : [3, false, false],
+        "COLOR_INVERT"                  : [false, false, false]
+
+    },
+
+    "Dreamshaper_v8_LCM_Canny": {
+        "MODEL NOTES"                   : "This is an LCM model, ",
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [3, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.7, true, true],
+        "CONDITIONING_SCALE"            : [0.8, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true], 
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", true, true],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, true, true]
+
+    },
+
+    "Dreamshaper_v8_LCM_img2img": {
+        "MODEL NOTES"                   : "This is an LCM model, ",
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [7, true, true],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.4, true, true],
+        "CONDITIONING_SCALE"            : [0.8, false, false],
+        "GUIDANCE_START"                : [0.0, false, false],
+        "GUIDANCE_END"                  : [1.0, false, false],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true], 
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, false, false],
+        "CANNY_UPPER"                   : [150, false, false], 
+        "CANNY_APERTURE"                : [3, false, false],
+        "COLOR_INVERT"                  : [false, false, false]
+
+    },
+
+    "SDXL_Turbo": {
+        "MODEL NOTES"                   : "This is an LCM model, ",    
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [0, true, false],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
+        "CONDITIONING_SCALE"            : [null, false, false],
+        "GUIDANCE_START"                : [null, false, false],
+        "GUIDANCE_END"                  : [null, false, false],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true],
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, false, false],
+        "CANNY_UPPER"                   : [150, false, false], 
+        "CANNY_APERTURE"                : [3, false, false],
+        "COLOR_INVERT"                  : [false, false, false]
+
+    },
+
+
+    "SDXL_Lightning": {
+        "MODEL NOTES"                   : "This is an LCM model, ",    
+        "PROMPT"                        : ["Minion with big giant goggles", true, true],
+        "SD_MARKDOWN"                   : ["### Stable Diffusion Model Settings", true, true],
+        "GUIDANCE_SCALE"                : [0, true, false],
+        "INFERENCE_STEPS"               : [2, true, true],
+        "NOISE_STRENGTH"                : [0.5, true, true],
+        "CONDITIONING_SCALE"            : [0.8, true, true],
+        "GUIDANCE_START"                : [0.0, true, true],
+        "GUIDANCE_END"                  : [1.0, true, true],
+        "RANDOM_SEED"                   : [21, true, true],
+        "HEIGHT"                        : [512, true, true],
+        "WIDTH"                         : [512, true, true],
+        "CANNY_MARKDOWN"                : ["### Canny Edge Detection Settings \n Choose how to refine the edge detection.", false, false],
+        "CANNY_LOWER"                   : [50, true, true],
+        "CANNY_UPPER"                   : [150, true, true], 
+        "CANNY_APERTURE"                : [3, true, true],
+        "COLOR_INVERT"                  : [false, false, false]
+
+    },
+
+    "second key":"second value",
+    "third key":"third value"
+
+  }
