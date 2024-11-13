@@ -74,7 +74,7 @@ def get_result_and_mask(frame, center_x, center_y, width, height):
 
     return frame, cutout
 
-def process_lcm(image, lower_threshold = 100, upper_threshold = 100, aperture=3): 
+def process_edges(image, lower_threshold = 100, upper_threshold = 100, aperture=3): 
     image = np.array(image)
     image = cv.Canny(image, lower_threshold, upper_threshold,apertureSize=aperture)
     image = np.repeat(image[:, :, np.newaxis], 3, axis=2)
@@ -118,7 +118,7 @@ def run_model():
 
     pipeline  = prepare_lcm_controlnet()
     
-    processor  = process_lcm
+    processor  = process_edges
 
     run_model  = run_lcm
 

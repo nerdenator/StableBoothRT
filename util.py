@@ -286,29 +286,24 @@ def StartNewSessionFolder(base_path=IMAGE_GALLERY_MAIN):
     Start new session folder. Creates a new folder for new photos to be taken. 
     """
 
-    # Regular expression to match the folder format "YearMonthDate_Session_001"
-    folder_pattern = re.compile(r'(\d{8})_Session_(\d{3})')
     
-    # List all subfolders in the base path
-    subfolders = [f for f in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, f))]
-    
-    # Filter and sort subfolders based on the date and session number
-    valid_folders = []
+    folder_pattern = re.compile(r'(\d{8})_Session_(\d{3})') # Regular expression to match the folder format "YearMonthDate_Session_001" --simple format
+    subfolders = [f for f in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, f))] # List all subfolders in the base path
+    valid_folders = [] # Filter and sort subfolders based on the date and session number
     for folder in subfolders:
         match = folder_pattern.match(folder)
         if match:
             valid_folders.append(folder)
     
     sorted_folders = sorted(valid_folders, key=lambda x: (x[:8], x[-3:]), reverse=True)
-    
     if sorted_folders:
         latest_folder = sorted_folders[0]
         latest_date_str, latest_session_str = folder_pattern.match(latest_folder).groups()
         latest_date = datetime.strptime(latest_date_str, '%Y%m%d')
         latest_session = int(latest_session_str)
         
-        # Check if the latest folder is from today
-        today_str = datetime.now().strftime('%Y%m%d')
+       
+        today_str = datetime.now().strftime('%Y%m%d')  # Check if the latest folder is from today
         if latest_date_str == today_str:
             new_session = latest_session + 1
         else:
@@ -317,12 +312,12 @@ def StartNewSessionFolder(base_path=IMAGE_GALLERY_MAIN):
         today_str = datetime.now().strftime('%Y%m%d')
         new_session = 0
     
-    # Create the new folder name
-    new_folder_name = f"{today_str}_Session_{new_session:03d}"
+    
+    new_folder_name = f"{today_str}_Session_{new_session:03d}" # Create the new folder name
     new_folder_path = os.path.join(base_path, new_folder_name)
     
-    # Create the new folder
-    os.makedirs(new_folder_path)
+   
+    os.makedirs(new_folder_path)  # Create the new folder
     
     print(new_folder_path)
 
@@ -362,8 +357,7 @@ def NavigateGalleryFolders(previous_or_next):
 def save_image(image, img_path):
     if isinstance(image,np.ndarray):
         Image.fromarray(image).save(img_path)
-    else:
-        # Not an np.ndarray
+    else: # save if not an np.ndarray
         image.save(img_path)
 
 def capture_and_save_images():
@@ -402,10 +396,10 @@ def resize_image_to_height(img, target_height):
     Returns:
     PIL.Image.Image: The resized image.
     """
-    # Calculate the new width to maintain the aspect ratio
+    # Calculate the new width to maintain the aspect ratio (simple calc)
     new_width = int(img.width * (target_height / img.height))
     
-    # Resize the image using LANCZOS resampling
+    # Resize the image using LANCZOS resampling (it's the best one for quality at sacrifice of a little bit of speed)
     resized_img = img.resize((new_width, target_height), Image.Resampling.LANCZOS)
     
     return resized_img
@@ -539,16 +533,25 @@ def prepare_seed(RANDOM_SEED):
 def process_canny(image, lower_threshold = 100, upper_threshold = 100, aperture=3): 
     image = cv.Canny(image, lower_threshold, upper_threshold,apertureSize=aperture)
     image = np.repeat(image[:, :, np.newaxis], 3, axis=2) # convert to 3 channel image (for color)
-
     return image
 
 def process_sdxlturbo(image):
     return image
 
+def resize_frame(frame):
+    """
+    Resize the frame to half its original size.
+    """
+    h, w = frame.shape[:2]
+    new_h, new_w = h // 2, w // 2
+    resized_frame = cv.resize(frame, (new_w, new_h), interpolation=cv.INTER_AREA)
+    return resized_frame
+
 def get_result_and_mask(frame, center_x, center_y, width, height):
     """
     Gets the full frame and the mask for cutout
     """
+    
     # Ensure the crop dimensions do not exceed the image boundaries
     top_left_y = max(0, center_y - height // 2)
     top_left_x = max(0, center_x - width // 2)
@@ -583,7 +586,7 @@ def get_result_and_mask(frame, center_x, center_y, width, height):
 #     return pipeline
 
     
-def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
+def prepare_pipeline(model):
     global SD_MODEL 
     global PIPELINE
     # global PARAMETER_STATE
@@ -891,9 +894,9 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
     PARAMETER_STATE["GUIDANCE_END"] = float(guidance_end)
     PARAMETER_STATE["ETA"] = float(eta)
 
-
     generator = prepare_seed(seed)
 
+    # input_image = resize_frame(input_img)
     center_x = (input_img.shape[1]) // 2
     center_y = (input_img.shape[0]) // 2    
 
@@ -994,11 +997,6 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
 def show_info_message(text):
     gr.Info(f"{text}")
 
-def import_cups():
-
-
-    return True
-    
 
 def list_printers():
     system = platform.system()
