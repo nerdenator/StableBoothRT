@@ -1,5 +1,3 @@
-# https://discuss.huggingface.co/t/how-to-programmatically-enable-or-disable-components/52350/3
-
 import gradio as gr
 import numpy as np
 import util
@@ -18,7 +16,6 @@ import util
 
 
 def show_warning(selection: gr.SelectData):
-    # gr.Warning(f"Your choice is #{selection.index}, with image: {selection.value['image']['path']}!")
     gr.Warning(f"Your choice is #{selection.index}!")
 
 
@@ -156,7 +153,7 @@ with gr.Blocks(css=css) as demo:
     
     # MAIN FUNCTION STUFF
     input_img.stream(fn=util.process_image, inputs=inputs, outputs=outputs, show_progress=False)
-    model_selected.change(fn=util.prepare_lcm_controlnet_or_sdxlturbo_pipeline, inputs=model_selected,outputs=selected_model_text)
+    model_selected.change(fn=util.prepare_pipeline, inputs=model_selected,outputs=selected_model_text)
     model_selected.change(fn=util.change_parameters, inputs=model_selected, outputs= [seed, 
                                                                                  prompt, 
                                                                                  output_width,
@@ -176,40 +173,18 @@ with gr.Blocks(css=css) as demo:
                                                                                     eta] )
     
 
-    # seed.change(fn=process_image,inputs=inputs, outputs=outputs) # works
-    # output_width.change(fn=process_image,inputs=inputs,outputs=outputs) # works
-    # output_height.change(fn=process_image,inputs=inputs,outputs=outputs) # works
-    
-    # enter_prompt.click(fn=process_image, inputs=inputs,outputs=outputs)
-    # enter_prompt.click(fn=update_state, inputs=["PROMPT", prompt])
-    # prompt.change(fn=lambda: (update_state, process_image), inputs=[["PROMPT",prompt], inputs], outputs=[[],outputs])
-    # enter_prompt.click(fn=update_state("PROMPT", prompt),inputs=[],outputs=prompt)
-
-
     # OTHER FUNCTIONALITIES
     # any inputs into GR objects need to be created by GR objects.
     refresh_button.click(fn=util.refresh_gallery, inputs=[], outputs=image_gallery) # no input, cus it always looks into folder
     capture_button.click(fn=util.capture_and_save_images, inputs=[], outputs=image_gallery) #no input cus it just saves the global image variable
     NewSessionButton.click(fn=lambda: (util.StartNewSessionFolder(), util.update_gallery_markdown()), inputs=[],outputs=[image_gallery,markdown_gallery_location])
-    # NewSessionButton.click(fn=,update_gallery_markdown, inputs=[], outputs=markdown_gallery_location)
-
-    # image_gallery.select(fn= lambda images: images, inputs=image_gallery, outputs=selected_images_txt)
     image_gallery.select(fn = show_warning, inputs = None)
     image_gallery.select(fn=util.select_images_for_print, inputs=[], outputs=selected_images_txt)
     reset_selection_btn.click(util.deselect_images_for_print, inputs=[], outputs= selected_images_txt)
-
-
     gen_photo_strip.click(fn=util.create_photo_strip, inputs=[nStrips, selected_images_txt, paper_width_mm, paper_height_mm], outputs=photo_strip_image)
-
     print_strip_btn.click(fn=util.print_file,inputs=printer, outputs=[])
-
-
-    # previous_session_button.click(fn=NavigateGalleryFolders, inputs=[gr.Textbox(value="Previous")], outputs=image_gallery)
-    # next_session_button.click(fn=NavigateGalleryFolders, inputs=[gr.Textbox(value="Next")], outputs=image_gallery)
-
     previous_session_button.click(fn=lambda: (util.NavigateGalleryFolders("Previous"), util.update_gallery_markdown()), 
                                   inputs=[], outputs=[image_gallery, markdown_gallery_location])
-
     next_session_button.click(fn=lambda: (util.NavigateGalleryFolders("Next"), util.update_gallery_markdown()), 
                               inputs=[],outputs=[image_gallery, markdown_gallery_location])
     

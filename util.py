@@ -22,10 +22,15 @@ from diffusers import StableDiffusionXLPipeline, UNet2DConditionModel,EulerDiscr
 from safetensors.torch import load_file # for lightning
 
 from diffusers import DiffusionPipeline, UNet2DConditionModel, LCMScheduler # for hypersd
+
 from diffusers import DiffusionPipeline, TCDScheduler # for hypersd
 
 from diffusers import (AutoPipelineForImage2Image, StableDiffusionControlNetPipeline,
                        ControlNetModel)
+
+
+import cv2 as cv
+from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
 
 
 ############
@@ -37,56 +42,61 @@ from diffusers import (AutoPipelineForImage2Image, StableDiffusionControlNetPipe
 ########
 
 # ## SD 1.5 Models
-# LCM_Dv7_MODEL_LOCATION        = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7' #
-# LCM_Dv8_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/"
+LCM_Dv7_MODEL_LOCATION        = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7' #
+LCM_Dv8_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/"
+CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
 
-# CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
+## SDXL Models
+SDXLTURBO_MODEL_LOCATION      = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo'
+SDXLL_MODEL_LOCATION          = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning"
+SDXL_BASEMODEL_LOCATION       = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0"
+SDXLL_CKPT_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
+SDXL_CANNY_CONTROLNET_LOCATION=  "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0"
 
-# ## SDXL Models
-# SDXLTURBO_MODEL_LOCATION      = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo'
-# SDXLL_MODEL_LOCATION          = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning"
-# SDXL_BASEMODEL_LOCATION       = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0"
-# SDXLL_CKPT_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
-# SDXL_CANNY_CONTROLNET_LOCATION=  "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0"
+## SDXS 
+SDXS_MODEL_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/"
+CONTROLNET_SKETCH_LOCATION    = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/"
 
-# ## SDXS 
-# SDXS_MODEL_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/"
-# CONTROLNET_SKETCH_LOCATION    = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/"
+## Hyper-SD
+HYPERSD_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD"
+HYPERSD_UNET_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors"
+HYPERSD_LORA_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors"
 
-
-# HYPERSD_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD"
-# HYPERSD_UNET_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors"
-# HYPERSD_LORA_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors"
+# SDXL 
+SDXL_LCM_LORA_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/lcm-lora-sdxl"
+SDXL_PAPERCUT_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Papercut_SDXL"
+SDXL_MIDJOURNEYV16_LOCATION   = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Midjourney-V6.1"
+SDXL_AAM_XL_ANIMEMIX_LOCATION = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/AAM_XL_AnimeMix"
 
 #### IMPORTANT WINDOWS LOCATIONS [MODIFY THESE]
 ########
 
-## SD 1.5 Models
-LCM_Dv7_MODEL_LOCATION        = 'D:\\rmasiso\\PROJECTS\\AI\\models\\LCM_Dreamshaper_v7' #
-LCM_Dv8_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\dreamshaper-8"
+# ## SD 1.5 Models
+# LCM_Dv7_MODEL_LOCATION        = 'D:\\rmasiso\\PROJECTS\\AI\\models\\LCM_Dreamshaper_v7' #
+# LCM_Dv8_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\dreamshaper-8"
 
-CONTROLNET_CANNY_LOCATION     = "D:\\rmasiso\\PROJECTS\\AI\\models\\control_v11p_sd15_canny"
+# CONTROLNET_CANNY_LOCATION     = "D:\\rmasiso\\PROJECTS\\AI\\models\\control_v11p_sd15_canny"
 
-## SDXL Models
-SDXLTURBO_MODEL_LOCATION      = 'D:\rmasiso\PROJECTS\AI\models\sdxl-turbo'
-SDXLL_MODEL_LOCATION          = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning"
-SDXL_BASEMODEL_LOCATION       = "F:\Projects\BuildStuff2024_RTSD\models\stable-diffusion-xl-base-1.0"
-SDXLL_CKPT_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning\sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
-SDXL_CANNY_CONTROLNET_LOCATION= "F:\Projects\BuildStuff2024_RTSD\models\controlnet-canny-sdxl-1.0"
+# ## SDXL Models
+# SDXLTURBO_MODEL_LOCATION      = 'D:\rmasiso\PROJECTS\AI\models\sdxl-turbo'
+# SDXLL_MODEL_LOCATION          = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning"
+# SDXL_BASEMODEL_LOCATION       = "F:\Projects\BuildStuff2024_RTSD\models\stable-diffusion-xl-base-1.0"
+# SDXLL_CKPT_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning\sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
+# SDXL_CANNY_CONTROLNET_LOCATION= "F:\Projects\BuildStuff2024_RTSD\models\controlnet-canny-sdxl-1.0"
 
-## SDXS 
-SDXS_MODEL_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper"
-CONTROLNET_SKETCH_LOCATION    = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper-sketch"
+# ## SDXS 
+# SDXS_MODEL_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper"
+# CONTROLNET_SKETCH_LOCATION    = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper-sketch"
 
 
-HYPERSD_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD"
-HYPERSD_UNET_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-Unet.safetensors"
-HYPERSD_LORA_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-lora.safetensors"
+# HYPERSD_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD"
+# HYPERSD_UNET_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-Unet.safetensors"
+# HYPERSD_LORA_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-lora.safetensors"
 
-SDXL_LCM_LORA_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\lcm-lora-sdxl"
-SDXL_PAPERCUT_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Papercut_SDXL"
-SDXL_MIDJOURNEYV16_LOCATION   = "F:\Projects\BuildStuff2024_RTSD\models\Midjourney-V6.1"
-SDXL_AAM_XL_ANIMEMIX_LOCATION = "F:\Projects\BuildStuff2024_RTSD\models\AAM_XL_AnimeMix"
+# SDXL_LCM_LORA_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\lcm-lora-sdxl"
+# SDXL_PAPERCUT_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Papercut_SDXL"
+# SDXL_MIDJOURNEYV16_LOCATION   = "F:\Projects\BuildStuff2024_RTSD\models\Midjourney-V6.1"
+# SDXL_AAM_XL_ANIMEMIX_LOCATION = "F:\Projects\BuildStuff2024_RTSD\models\AAM_XL_AnimeMix"
 
 
 AVAILABLE_MODELS = ["cartoon", 
@@ -527,11 +537,8 @@ def prepare_seed(RANDOM_SEED):
 
 
 def process_canny(image, lower_threshold = 100, upper_threshold = 100, aperture=3): 
-    # image = np.array(image)
     image = cv.Canny(image, lower_threshold, upper_threshold,apertureSize=aperture)
     image = np.repeat(image[:, :, np.newaxis], 3, axis=2) # convert to 3 channel image (for color)
-    # image = cv.cvtColor(image, cv.COLOR_GRAY2BGR)
-    # image = cv.cvtColor(image, cv.COLOR_GRAY2RGB)
 
     return image
 
@@ -723,11 +730,9 @@ def prepare_lcm_controlnet_or_sdxlturbo_pipeline(model):
 
 
 def run_lcm_canny(pipeline, ref_image, generator):
-    # global PARAMETER_STATE
 
     if pipeline is None:
         raise ValueError("Pipeline is not initialized.")
-    # generator = prepare_seed()
 
     gen_image = pipeline(prompt                        = PARAMETER_STATE['PROMPT'],
                          num_inference_steps           = PARAMETER_STATE['INFERENCE_STEPS'], 
@@ -736,7 +741,7 @@ def run_lcm_canny(pipeline, ref_image, generator):
                          height                        = PARAMETER_STATE["HEIGHT"], 
                          generator                     = generator,
                          image                         = ref_image, 
-                         strength                      = PARAMETER_STATE["NOISE_STRENGTH"], # do i need this here?
+                         strength                      = PARAMETER_STATE["NOISE_STRENGTH"], 
                          controlnet_conditioning_scale = PARAMETER_STATE["CONDITIONING_SCALE"], 
                          control_guidance_start        = PARAMETER_STATE["GUIDANCE_START"], 
                          control_guidance_end          = PARAMETER_STATE["GUIDANCE_END"], 
@@ -749,8 +754,8 @@ def run_lcm_img2img(pipeline, ref_image, generator):
     # global PARAMETER_STATE
 
     if pipeline is None:
-        # raise ValueError("Pipeline is not initialized. Using non-SD model.")
-        gen_image = ref_image 
+        raise ValueError("Pipeline is not initialized. Using non-SD model.")
+        # gen_image = ref_image 
         
     # generator = prepare_seed()
 
@@ -946,10 +951,12 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
         image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
         image = convert_numpy_image_to_pil_image(image)
         image = run_lcm_lora(PIPELINE, image, generator)
+
     elif model_selected=="MidjourneyV1.6_LCM-LoRA":
         image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
         image = convert_numpy_image_to_pil_image(image)
         image = run_lcm_lora(PIPELINE, image, generator)
+
     elif model_selected=="AAM_XL_AnimeMix_LCM-LoRA":
         image = process_canny(cropped_image, canny_lower_threshold, canny_upper_threshold, canny_aperture)
         image = convert_numpy_image_to_pil_image(image)
