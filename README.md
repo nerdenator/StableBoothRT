@@ -14,7 +14,7 @@ git clone https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7
 git clone https://huggingface.co/stabilityai/sdxl-turbo
 ```
 
-## 3) create python environment with Python 3.10.11 and activate it
+## 2) create python environment with Python 3.10.11 and activate it
 
 MacOS: https://www.python.org/downloads/macos/
 Windows: https://www.python.org/downloads/windows/
