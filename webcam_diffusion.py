@@ -102,7 +102,7 @@ def run_lcm(pipeline, ref_image):
                          width                         = WIDTH, 
                          height                        = HEIGHT, 
                          generator                     = generator,
-                         image                         = ref_image, 
+                         image                         = ref_image, # reference image processed to be edges!
                          controlnet_conditioning_scale = CONDITIONING_SCALE, 
                          control_guidance_start        = GUIDANCE_START, 
                          control_guidance_end          = GUIDANCE_END, 
