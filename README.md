@@ -6,6 +6,8 @@
    - SDXL Turbo: https://huggingface.co/stabilityai/sdxl-turbo
 
 ```git clone https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7```
+
+
 ```git clone https://huggingface.co/stabilityai/sdxl-turbo```
 
 ## 3) create python environment with Python 3.10.11 and activate it
