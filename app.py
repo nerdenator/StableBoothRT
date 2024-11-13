@@ -1,13 +1,11 @@
-import gradio as gr
-import numpy as np
-import util
-
-
-
 ###
 ### PRE-ORDER BOOK on DIY AI! https://a.co/d/eDxJXJ0
 ###
 
+
+import gradio as gr
+import numpy as np
+import util
 
 
 ###
@@ -126,9 +124,6 @@ with gr.Blocks(css=css) as demo:
         with gr.Column(stretch=True):
             printer = gr.Dropdown(choices=util.list_printers(), label="Select Printer", scale=2)
             print_strip_btn = gr.Button("Print", label="Print", scale=6,variant="primary")
-
-    ## WEBCAM FUNCTION CALL
-    ###############
         
     inputs = [
         model_selected, 
@@ -178,7 +173,7 @@ with gr.Blocks(css=css) as demo:
     refresh_button.click(fn=util.refresh_gallery, inputs=[], outputs=image_gallery) # no input, cus it always looks into folder
     capture_button.click(fn=util.capture_and_save_images, inputs=[], outputs=image_gallery) #no input cus it just saves the global image variable
     NewSessionButton.click(fn=lambda: (util.StartNewSessionFolder(), util.update_gallery_markdown()), inputs=[],outputs=[image_gallery,markdown_gallery_location])
-    image_gallery.select(fn = show_warning, inputs = None)
+    # image_gallery.select(fn = show_warning, inputs = None)
     image_gallery.select(fn=util.select_images_for_print, inputs=[], outputs=selected_images_txt)
     reset_selection_btn.click(util.deselect_images_for_print, inputs=[], outputs= selected_images_txt)
     gen_photo_strip.click(fn=util.create_photo_strip, inputs=[nStrips, selected_images_txt, paper_width_mm, paper_height_mm], outputs=photo_strip_image)
