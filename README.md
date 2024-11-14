@@ -4,6 +4,7 @@
 
    - Dreamshaper v7 LCM: https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7
    - SDXL Turbo: https://huggingface.co/stabilityai/sdxl-turbo
+   - ControlNet for Canny Edge Detection: https://huggingface.co/lllyasviel/control_v11p_sd15_canny
 
 ```
 git clone https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7
@@ -12,6 +13,10 @@ git clone https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7
 
 ```
 git clone https://huggingface.co/stabilityai/sdxl-turbo
+```
+
+```
+git clone https://huggingface.co/lllyasviel/control_v11p_sd15_canny
 ```
 
 ## 2) create python environment with Python 3.10.11 and activate it
