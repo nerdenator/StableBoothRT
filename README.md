@@ -1,5 +1,8 @@
 # StableBoothRT
 
+Notes: 
+- [additional instructions for how to install additional models will come soon]
+
 ## 1) Download Models using Git LFS: https://git-lfs.com/
 
    - Dreamshaper v7 LCM: https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7
