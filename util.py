@@ -14,23 +14,13 @@ import subprocess
 import platform
 import sys
 
+# diffusers objects
+from diffusers import (DiffusionPipeline, StableDiffusionPipeline, StableDiffusionXLPipeline, 
+                       AutoPipelineForImage2Image, StableDiffusionXLControlNetPipeline, 
+                       StableDiffusionControlNetPipeline, ControlNetModel, UNet2DConditionModel, 
+                       LCMScheduler, TCDScheduler )
 
-
-
-from diffusers import StableDiffusionPipeline
-from diffusers import StableDiffusionXLPipeline, UNet2DConditionModel,EulerDiscreteScheduler, StableDiffusionXLControlNetPipeline # for lightning
 from safetensors.torch import load_file # for lightning
-
-from diffusers import DiffusionPipeline, UNet2DConditionModel, LCMScheduler # for hypersd
-
-from diffusers import DiffusionPipeline, TCDScheduler # for hypersd
-
-from diffusers import (AutoPipelineForImage2Image, StableDiffusionControlNetPipeline,
-                       ControlNetModel)
-
-
-import cv2 as cv
-from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
 
 
 ############
