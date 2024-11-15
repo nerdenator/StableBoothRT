@@ -99,7 +99,7 @@ SDXL_AAM_XL_ANIMEMIX_LOCATION = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RT
 # SDXL_AAM_XL_ANIMEMIX_LOCATION = "F:\Projects\BuildStuff2024_RTSD\models\AAM_XL_AnimeMix"
 
 
-AVAILABLE_MODELS = ["cartoon", 
+AVAILABLE_MODELS = [
                     "canny",
                     "Dreamshaper_v7_LCM_Canny",
                     "Dreamshaper_v7_LCM_img2img", 
