@@ -127,7 +127,8 @@ IMAGE_EXTENSIONS       = ['.png', '.jpeg', '.jpg', '.gif', '.bmp', '.tiff', '.we
 IMAGE_GALLERY_HEIGHT   = 100 # resolution of images inside gallery
 
 DYNAMIC_PARAMETERS     = ["RANDOM_SEED", "PROMPT", "WIDTH",'HEIGHT',"SD_MARKDOWN",'GUIDANCE_SCALE','INFERENCE_STEPS','NOISE_STRENGTH',
-                            'CONDITIONING_SCALE','GUIDANCE_START',"GUIDANCE_END", "CANNY_MARKDOWN", "CANNY_LOWER", "CANNY_UPPER", "CANNY_APERTURE", "COLOR_INVERT", "ETA"]
+                            'CONDITIONING_SCALE','GUIDANCE_START',"GUIDANCE_END", "CANNY_MARKDOWN", "CANNY_LOWER", "CANNY_UPPER", "CANNY_APERTURE", 
+                            "COLOR_INVERT", "ETA", "ZOOM"]
 
 
 DEFAULT_PROMPT         = "portrait of a minion, wearing goggles, yellow skin, wearing a beanie, despicable me movie, in the style of pixar movie" #van gogh in the style of van gogh"
@@ -155,6 +156,7 @@ PARAMETER_STATE        = {
                             "CANNY_APERTURE": 3,
                             "COLOR_INVERT": False,
                             "ETA" : 1.0,
+                            "ZOOM" : 1.0,
                           }
 
 
@@ -250,10 +252,8 @@ def mm2inch(source_system="metric", value=100):
 
 def get_image_files(prefix, folder_path):
     files = np.sort(os.listdir(folder_path))
-
     # Filter files that start with the prefix and end with any of the image extensions
     image_files = [file for file in files if file.startswith(prefix) and any(file.lower().endswith(ext) for ext in IMAGE_EXTENSIONS)]
-    
     return image_files
 
 def refresh_gallery():
@@ -363,8 +363,8 @@ def capture_and_save_images():
 
         # SAVED_IMAGES_INDEX = len(image_files) + 1
 
-        raw_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+1:02d}.png")
-        processed_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+2:02d}.png")
+        raw_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+1:03d}.png")
+        processed_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+2:03d}.png")
 
         save_image(RAW_IMAGE, raw_img_path)
         save_image(PROCESSED_IMAGE, processed_img_path)
@@ -528,12 +528,13 @@ def process_canny(image, lower_threshold = 100, upper_threshold = 100, aperture=
 def process_sdxlturbo(image):
     return image
 
-def resize_frame(frame):
+def resize_frame(frame, zoom_out):
     """
     Resize the frame to half its original size.
     """
     h, w = frame.shape[:2]
-    new_h, new_w = h // 2, w // 2
+    new_h, new_w = h // zoom_out, w // zoom_out #zoom_out tells us how much we want to zoom-out of the captured frame from camera
+    #print(h,w, new_h, new_w)
     resized_frame = cv.resize(frame, (new_w, new_h), interpolation=cv.INTER_AREA)
     return resized_frame
 
@@ -862,7 +863,7 @@ def run_lcm_lora(pipeline, ref_image, generator):
 
 def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_threshold, canny_aperture, color_invert, 
                   seed, prompt, width, height, guidance_scale, inference_steps, noise_strength, conditioning_scale,
-                    guidance_start, guidance_end, eta):
+                    guidance_start, guidance_end, eta, zoom_out_amount):
     """
     
     MASTER PROCESS FUNCTION
@@ -883,10 +884,11 @@ def process_image(model_selected, input_img, canny_lower_threshold,canny_upper_t
     PARAMETER_STATE['GUIDANCE_START'] = float(guidance_start)
     PARAMETER_STATE["GUIDANCE_END"] = float(guidance_end)
     PARAMETER_STATE["ETA"] = float(eta)
+    PARAMETER_STATE["ZOOM"] = float(zoom_out_amount)
 
     generator = prepare_seed(seed)
 
-    # input_image = resize_frame(input_img)
+    input_img = resize_frame(input_img, zoom_out_amount)
     center_x = (input_img.shape[1]) // 2
     center_y = (input_img.shape[0]) // 2    
 

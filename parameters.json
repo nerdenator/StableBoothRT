@@ -20,7 +20,8 @@
         "CANNY_UPPER"                   : [150, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -42,7 +43,8 @@
         "CANNY_UPPER"                   : [95, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -64,7 +66,8 @@
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
         "COLOR_INVERT"                  : [false, false, false],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -86,7 +89,8 @@
         "CANNY_UPPER"                   : [95, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -108,7 +112,8 @@
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
         "COLOR_INVERT"                  : [false, false, false],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -130,7 +135,8 @@
         "CANNY_UPPER"                   : [150, false, false], 
         "CANNY_APERTURE"                : [3, false, false],
         "COLOR_INVERT"                  : [false, false, false],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -153,7 +159,8 @@
         "CANNY_UPPER"                   : [73, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, false, false],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -175,7 +182,8 @@
         "CANNY_UPPER"                   : [73, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, false, false],
-        "ETA"                           : [1.0, true, true]
+        "ETA"                           : [1.0, true, true],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -197,7 +205,8 @@
         "CANNY_UPPER"                   : [73, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 
@@ -219,7 +228,8 @@
         "CANNY_UPPER"                   : [150, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
     "MidjourneyV1.6_LCM-LoRA": {
@@ -240,7 +250,8 @@
         "CANNY_UPPER"                   : [150, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
     "AAM_XL_AnimeMix_LCM-LoRA": {
@@ -261,7 +272,8 @@
         "CANNY_UPPER"                   : [103, true, true], 
         "CANNY_APERTURE"                : [3, true, true],
         "COLOR_INVERT"                  : [false, true, true],
-        "ETA"                           : [1.0, false, false]
+        "ETA"                           : [1.0, false, false],
+        "ZOOM"                          : [1.0, true, true] 
 
     },
 

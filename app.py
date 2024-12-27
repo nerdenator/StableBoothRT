@@ -59,6 +59,8 @@ with gr.Blocks(css=css) as demo:
             with gr.Row():
                 output_width     = gr.Radio([384,512,1024], value= util.PARAMETER_STATE['WIDTH'], label="Output Width", info="Some models do better at 512, others at 1024",interactive=True)
                 output_height    = gr.Radio([384,512,1024], value= util.PARAMETER_STATE['HEIGHT'], label="Output Height", info="Some models do better at 512, others at 1024",interactive=True)
+            with gr.Row():
+                zoom_out_amount  = gr.Slider(1,3, value=util.PARAMETER_STATE['ZOOM'], step=1, label="Zoom Out Amount", info="Only change if using a high-res camera! Small images don't render well", interactive=True)
 
             
 
@@ -107,22 +109,22 @@ with gr.Blocks(css=css) as demo:
     ## IMAGE GALLERY /  ## REFRESH BUTTON
     #####################
     with gr.Row():
-        image_gallery = gr.Gallery(label="Image Gallery",columns=8)
+        image_gallery = gr.Gallery(label="Image Gallery",columns=8,allow_preview=False )
     with gr.Row():
-        refresh_button = gr.Button("Refresh")
+        refresh_button      = gr.Button("Refresh")
         selected_images_txt = gr.Text(util.SELECTED_IMAGES, label="Images for Print")
         reset_selection_btn = gr.Button("Reset Selection")
 
     # OUTPUT PHOTO_IMAGE
     with gr.Row():
         with gr.Column():
-            nStrips = gr.Slider(minimum=3, maximum=6, value=4, label="Number of Strips",step=1,interactive=True)
-            paper_width_mm = gr.Number(value = 148, label = "Paper Width (mm)")
+            nStrips         = gr.Slider(minimum=3, maximum=6, value=4, label="Number of Strips",step=1,interactive=True)
+            paper_width_mm  = gr.Number(value = 148, label = "Paper Width (mm)")
             paper_height_mm = gr.Number(value = 100, label = "Paper Height (mm)")
-            gen_photo_strip= gr.Button("Generate Strip",variant="primary")
+            gen_photo_strip = gr.Button("Generate Strip",variant="primary")
         photo_strip_image = gr.Image(label="Image for print")
         with gr.Column(stretch=True):
-            printer = gr.Dropdown(choices=util.list_printers(), label="Select Printer", scale=2)
+            printer         = gr.Dropdown(choices=util.list_printers(), label="Select Printer", scale=2)
             print_strip_btn = gr.Button("Print", label="Print", scale=6,variant="primary")
         
     inputs = [
@@ -143,6 +145,7 @@ with gr.Blocks(css=css) as demo:
         guidance_start,   
         guidance_end, 
         eta,
+        zoom_out_amount
                 ]
     outputs = [output_img]
     
@@ -165,7 +168,8 @@ with gr.Blocks(css=css) as demo:
                                                                                     canny_upper_threshold,
                                                                                     canny_aperture,
                                                                                     color_invert,
-                                                                                    eta] )
+                                                                                    eta,
+                                                                                    zoom_out_amount] )
     
 
     # OTHER FUNCTIONALITIES
