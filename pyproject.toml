@@ -1,0 +1,12 @@
+[project]
+name = "StableBoothRT"
+version = "0.1.0"
+dependencies = [
+    "diffusers==0.30.3",
+    "gradio==3.43.1",
+    "opencv-python==4.6.0.66",
+    "pycups>=2.0.4",
+    "torch==2.5.0",
+    "torchvision==0.20.0",
+]
+
