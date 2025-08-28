@@ -22,48 +22,27 @@ git clone https://huggingface.co/stabilityai/sdxl-turbo
 git clone https://huggingface.co/lllyasviel/control_v11p_sd15_canny
 ```
 
-## 2) create python environment with Python 3.10.11 and activate it
+## 2) Install uv
+*note: these are instructions from https://docs.astral.sh/uv/getting-started/installation/*
+For MacOS/Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+Windows: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
 
-MacOS: https://www.python.org/downloads/macos/
-Windows: https://www.python.org/downloads/windows/
-
-MacOS:
-
-find your python versions in terminal:
+## 3) Clone repository & change into directory
 ```
-ls /usr/local/bin/python*
-```
+git clone https://github.com/rmasiso/StableBoothRT
 
-then use the versions to create a python venv
-```
-{path here} -m venv SBRT_venv
+cd StableBoothRT
 ```
 
-activate the environment
-
+## 4) Set up project using uv:
 ```
-source SBRT_venv/bin/activate
-```
-
-Windows:
-
-find your python versions in cmd:
-```
-py -0p
+uv venv --python 3.10.11
+source .venv/bin/activate
+uv sync
 ```
 
-then use the versions to create a python venv
-```
-{path here} -m venv SBRT_venv
-```
 
-activate the environment
-
-```
-SBRT_venv\Scripts\activate
-```
-
-## 3) clone repo and cd into it
+## 5) clone repo and cd into it
 
 ```
 git clone https://github.com/rmasiso/StableBoothRT
@@ -73,29 +52,7 @@ git clone https://github.com/rmasiso/StableBoothRT
 cd StableBoothRT
 ```
 
-## 4) Install Pytorch and install requirements.txt file
-
-MacOS:
-
-Install: 
-
-```
-pip3 install torch torchvision torchaudio
-```
-
-or (preferrably to match dependencies in requirements.txt)
-
-```
-pip install torch==2.5.0 torchaudio==2.5.0 torchvision==0.20.0
-```
-
-then 
-
-```
-pip install -r requirements_windows.txt
-```
-
-Windows:
+## 6) FOR WINDOWS: Install Pytorch and install requirements.txt file
 
 for Cuda 12.1
 ```
