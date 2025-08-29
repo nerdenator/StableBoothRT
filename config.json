@@ -1,0 +1,31 @@
+{
+  "models": {
+    "LCM_Dv7_MODEL_LOCATION": "/Users/aaronmcruer/models/LCM_Dreamshaper_v7",
+    "LCM_Dv8_MODEL_LOCATION": "/Users/aaronmcruer/models/dreamshaper-8",
+    "CONTROLNET_CANNY_LOCATION": "/Users/aaronmcruer/models/control_v11p_sd15_canny",
+    "SDXLTURBO_MODEL_LOCATION": "/Users/aaronmcruer/models/sdxl-turbo",
+    "SDXLL_MODEL_LOCATION": "/Users/aaronmcruer/models/SDXL-Lightning",
+    "SDXL_BASEMODEL_LOCATION": "/Users/aaronmcruer/models/stable-diffusion-xl-base-1.0",
+    "SDXLL_CKPT_LOCATION": "/Users/aaronmcruer/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors",
+    "SDXL_CANNY_CONTROLNET_LOCATION": "/Users/aaronmcruer/models/controlnet-canny-sdxl-1.0",
+    "SDXS_MODEL_LOCATION": "/Users/aaronmcruer/models/sdxs-512-dreamshaper",
+    "CONTROLNET_SKETCH_LOCATION": "/Users/aaronmcruer/models/sdxs-512-dreamshaper-sketch",
+    "HYPERSD_MODEL_LOCATION": "/Users/aaronmcruer/models/Hyper-SD",
+    "HYPERSD_UNET_LOCATION": "/Users/aaronmcruer/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors",
+    "HYPERSD_LORA_LOCATION": "/Users/aaronmcruer/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors",
+    "SDXL_LCM_LORA_LOCATION": "/Users/aaronmcruer/models/lcm-lora-sdxl",
+    "SDXL_PAPERCUT_LOCATION": "/Users/aaronmcruer/models/Papercut_SDXL",
+    "SDXL_MIDJOURNEYV16_LOCATION": "/Users/aaronmcruer/models/Midjourney-V6.1",
+    "SDXL_AAM_XL_ANIMEMIX_LOCATION": "/Users/aaronmcruer/models/AAM_XL_AnimeMix"
+  },
+  "paths": {
+    "JSON_FILE_PATH": "parameters.json",
+    "SAVE_FOLDER": "output",
+    "IMAGE_GALLERY_MAIN": "image_gallery",
+    "IMAGE_GALLERY_LOCATION": "image_gallery/20241019_Session_000"
+  },
+  "settings": {
+    "DPI": 300,
+    "IMAGE_GALLERY_HEIGHT": 100
+  }
+}

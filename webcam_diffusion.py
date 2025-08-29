@@ -10,10 +10,10 @@ from diffusers import (StableDiffusionControlNetPipeline,
 import torch
 
 def choose_device(torch_device = None):
-    print('...Is CUDA available in your computer?',\
-          '\n... Yes!' if torch.cuda.is_available() else "\n... No D': ")
-    print('...Is MPS available in your computer?',\
-          '\n... Yes' if torch.backends.mps.is_available() else "\n... No D':")
+    print("...Is CUDA available in your computer?",\
+          "\n... Yes!" if torch.cuda.is_available() else "\n... No D': ")
+    print("...Is MPS available in your computer?",\
+          "\n... Yes" if torch.backends.mps.is_available() else "\n... No D':")
 
     if torch_device is None:
         if torch.cuda.is_available():
@@ -34,28 +34,21 @@ def choose_device(torch_device = None):
 ################# CONSTANTS
 #################
 
-# DEFAULT_PROMPT                = "portrait of adult pikachu monster, in the style of pixar movie, pikachu face, pokemon" #van gogh in the style of van gogh"
-# DEFAULT_PROMPT                = "pikachu, pokemon, wizard hat, style of pixar movie, Disney, 8k" #van gogh in the style of van gogh"
-# DEFAULT_PROMPT                  = "portrait of a minion, wearing goggles, yellow skin, wearing a beanie, despicable me movie, in the style of pixar movie" #van gogh in the style of van gogh"
-# DEFAULT_PROMPT                = "portrait of a indiana jones, harrison ford film"
 DEFAULT_PROMPT                = "van gogh in the style of van gogh"
-# DEFAULT_PROMPT                = "beautiful and cute angry crying success kid wearing beanie"
-# DEFAULT_PROMPT                = "portrait of happy male toddler, baby, very cute, big eyes, kawaii, style of Pixar, Disney, 8k"
-# DEFAULT_PROMPT                = "portrait of stitch, baby, very cute, big eyes, kawaii, style of Pixar, Disney, 8k"
 
-MODEL                         = "lcm"
-LCM_MODEL_LOCATION            = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7'
-CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
-TORCH_DEVICE, TORCH_DTYPE     = choose_device()  
-GUIDANCE_SCALE                = 3 # 
-INFERENCE_STEPS               = 2 #4 for lcm (high quality) 
-DEFAULT_NOISE_STRENGTH        = 0.7 # 0.5 works well too
-CONDITIONING_SCALE            = .7 # .5 works well too
-GUIDANCE_START                = 0.
-GUIDANCE_END                  = 1.
-RANDOM_SEED                   = 21
-HEIGHT                        = 512 #384 #512
-WIDTH                         = 512 #384 #512
+MODEL = "lcm"
+LCM_MODEL_LOCATION = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7'
+CONTROLNET_CANNY_LOCATION = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
+TORCH_DEVICE, TORCH_DTYPE = choose_device()  
+GUIDANCE_SCALE = 3 # 
+INFERENCE_STEPS = 2 #4 for lcm (high quality) 
+DEFAULT_NOISE_STRENGTH = 0.7 # 0.5 works well too
+CONDITIONING_SCALE = .7 # .5 works well too
+GUIDANCE_START = 0.
+GUIDANCE_END = 1.
+RANDOM_SEED = 21
+HEIGHT = 512 #384 #512
+WIDTH = 512 #384 #512
 
 def prepare_seed():
     generator = torch.manual_seed(RANDOM_SEED)
@@ -80,32 +73,34 @@ def process_edges(image, lower_threshold = 100, upper_threshold = 100, aperture=
     return image
 
 def prepare_lcm_controlnet():
+    controlnet = ControlNetModel.from_pretrained(
+        CONTROLNET_CANNY_LOCATION, 
+        torch_dtype=TORCH_DTYPE,
+        use_safetensors=True
+    )
 
-    controlnet = ControlNetModel.from_pretrained(CONTROLNET_CANNY_LOCATION, torch_dtype=TORCH_DTYPE,
-                                            use_safetensors=True)
-
-    pipeline = StableDiffusionControlNetPipeline.from_pretrained(LCM_MODEL_LOCATION,\
-                                                    controlnet=controlnet, 
-                                                    # unet=unet,\
-                                                    torch_dtype=TORCH_DTYPE, safety_checker=None).\
-                                                to(TORCH_DEVICE)
+    pipeline = StableDiffusionControlNetPipeline.from_pretrained(
+        LCM_MODEL_LOCATION,
+        controlnet=controlnet, 
+        torch_dtype=TORCH_DTYPE, safety_checker=None
+    ).to(TORCH_DEVICE)
     
     return pipeline
 
 def run_lcm(pipeline, ref_image):
-
     generator = prepare_seed()
-    gen_image = pipeline(prompt                        = DEFAULT_PROMPT,
-                         num_inference_steps           = INFERENCE_STEPS, 
-                         guidance_scale                = GUIDANCE_SCALE,
-                         width                         = WIDTH, 
-                         height                        = HEIGHT, 
-                         generator                     = generator,
-                         image                         = ref_image, # reference image processed to be edges!
-                         controlnet_conditioning_scale = CONDITIONING_SCALE, 
-                         control_guidance_start        = GUIDANCE_START, 
-                         control_guidance_end          = GUIDANCE_END, 
-                        ).images[0]
+    gen_image = pipeline(
+        prompt = DEFAULT_PROMPT,
+        num_inference_steps = INFERENCE_STEPS, 
+        guidance_scale = GUIDANCE_SCALE,
+        width = WIDTH, 
+        height = HEIGHT, 
+        generator = generator,
+        image = ref_image, # reference image processed to be edges!
+        controlnet_conditioning_scale = CONDITIONING_SCALE, 
+        control_guidance_start = GUIDANCE_START, 
+        control_guidance_end = GUIDANCE_END, 
+    ).images[0]
 
     return gen_image
 
@@ -175,5 +170,3 @@ def run_model():
 ###
 
 run_model()
-
-

@@ -3,6 +3,7 @@
 import gc
 import torch
 import json
+
 import gradio as gr
 import cv2 as cv
 from PIL import Image
@@ -16,149 +17,185 @@ import sys
 
 # diffusers objects
 from diffusers import (
-                       AutoPipelineForImage2Image, StableDiffusionXLControlNetPipeline, 
-                       StableDiffusionControlNetPipeline, ControlNetModel, UNet2DConditionModel, 
-                       LCMScheduler, TCDScheduler )
+    AutoPipelineForImage2Image, 
+    StableDiffusionXLControlNetPipeline, 
+    StableDiffusionControlNetPipeline, 
+    ControlNetModel, 
+    UNet2DConditionModel, 
+    LCMScheduler, 
+    TCDScheduler 
+)
 
 from safetensors.torch import load_file # for lightning
 
 
+
+# Load configuration from JSON file
+def load_config():
+    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    try:
+        with open(config_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"Warning: Config file not found at {config_path}. Using default values.")
+        return {"models": {}, "paths": {}, "settings": {}}
+
+CONFIG = load_config()
+
 ############
-############ CONSTANTS (modify these!)
+############ CONSTANTS (loaded from config file with defaults)
 ############
 
-
-#### IMPORTANT FILE LOCATIONS [MODIFY THESE]
-########
-
-# ## SD 1.5 Models
-LCM_Dv7_MODEL_LOCATION        = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7' #
-LCM_Dv8_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/"
-CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
+# MODEL PATHS
+LCM_Dv7_MODEL_LOCATION = CONFIG.get('models', {}).get('LCM_Dv7_MODEL_LOCATION', '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7')
+LCM_Dv8_MODEL_LOCATION = CONFIG.get('models', {}).get('LCM_Dv8_MODEL_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/dreamshaper-8/")
+CONTROLNET_CANNY_LOCATION = CONFIG.get('models', {}).get('CONTROLNET_CANNY_LOCATION', "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny")
 
 ## SDXL Models
-SDXLTURBO_MODEL_LOCATION      = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo'
-SDXLL_MODEL_LOCATION          = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning"
-SDXL_BASEMODEL_LOCATION       = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0"
-SDXLL_CKPT_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
-SDXL_CANNY_CONTROLNET_LOCATION=  "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0"
+SDXLTURBO_MODEL_LOCATION = CONFIG.get('models', {}).get('SDXLTURBO_MODEL_LOCATION', '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/sdxl-turbo')
+SDXLL_MODEL_LOCATION = CONFIG.get('models', {}).get('SDXLL_MODEL_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning")
+SDXL_BASEMODEL_LOCATION = CONFIG.get('models', {}).get('SDXL_BASEMODEL_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/stable-diffusion-xl-base-1.0")
+SDXLL_CKPT_LOCATION = CONFIG.get('models', {}).get('SDXLL_CKPT_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/SDXL-Lightning/sdxl_lightning_2step_unet.safetensors")
+SDXL_CANNY_CONTROLNET_LOCATION = CONFIG.get('models', {}).get('SDXL_CANNY_CONTROLNET_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/controlnet-canny-sdxl-1.0")
 
 ## SDXS 
-SDXS_MODEL_LOCATION           = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/"
-CONTROLNET_SKETCH_LOCATION    = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/"
+SDXS_MODEL_LOCATION = CONFIG.get('models', {}).get('SDXS_MODEL_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper/")
+CONTROLNET_SKETCH_LOCATION = CONFIG.get('models', {}).get('CONTROLNET_SKETCH_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/sdxs-512-dreamshaper-sketch/")
 
 ## Hyper-SD
-HYPERSD_MODEL_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD"
-HYPERSD_UNET_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors"
-HYPERSD_LORA_LOCATION         = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors"
+HYPERSD_MODEL_LOCATION = CONFIG.get('models', {}).get('HYPERSD_MODEL_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD")
+HYPERSD_UNET_LOCATION = CONFIG.get('models', {}).get('HYPERSD_UNET_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-Unet.safetensors")
+HYPERSD_LORA_LOCATION = CONFIG.get('models', {}).get('HYPERSD_LORA_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/models/Hyper-SD/Hyper-SDXL-1step-lora.safetensors")
 
 # SDXL 
-SDXL_LCM_LORA_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/lcm-lora-sdxl"
-SDXL_PAPERCUT_LOCATION        = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Papercut_SDXL"
-SDXL_MIDJOURNEYV16_LOCATION   = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Midjourney-V6.1"
-SDXL_AAM_XL_ANIMEMIX_LOCATION = "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/AAM_XL_AnimeMix"
+SDXL_LCM_LORA_LOCATION = CONFIG.get('models', {}).get('SDXL_LCM_LORA_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/lcm-lora-sdxl")
+SDXL_PAPERCUT_LOCATION = CONFIG.get('models', {}).get('SDXL_PAPERCUT_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Papercut_SDXL")
+SDXL_MIDJOURNEYV16_LOCATION = CONFIG.get('models', {}).get('SDXL_MIDJOURNEYV16_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/Midjourney-V6.1")
+SDXL_AAM_XL_ANIMEMIX_LOCATION = CONFIG.get('models', {}).get('SDXL_AAM_XL_ANIMEMIX_LOCATION', "/Volumes/980ProGyrus/Projects/BuildStuff2024_RTSD/AAM_XL_AnimeMix")
 
-#### IMPORTANT WINDOWS LOCATIONS [MODIFY THESE]
-########
+# Other paths and settings
+JSON_FILE_PATH = CONFIG.get('paths', {}).get('JSON_FILE_PATH', 'parameters.json')
+SAVE_FOLDER = CONFIG.get('paths', {}).get('SAVE_FOLDER', 'output')
+IMAGE_GALLERY_MAIN = CONFIG.get('paths', {}).get('IMAGE_GALLERY_MAIN', 'image_gallery')
+IMAGE_GALLERY_LOCATION = CONFIG.get('paths', {}).get('IMAGE_GALLERY_LOCATION', 'image_gallery/20241019_Session_000')
+DPI = CONFIG.get('settings', {}).get('DPI', 300)
+IMAGE_GALLERY_HEIGHT = CONFIG.get('settings', {}).get('IMAGE_GALLERY_HEIGHT', 100)
 
-# ## SD 1.5 Models
-# LCM_Dv7_MODEL_LOCATION        = 'D:\\rmasiso\\PROJECTS\\AI\\models\\LCM_Dreamshaper_v7' #
-# LCM_Dv8_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\dreamshaper-8"
-
-# CONTROLNET_CANNY_LOCATION     = "D:\\rmasiso\\PROJECTS\\AI\\models\\control_v11p_sd15_canny"
-
-# ## SDXL Models
-# SDXLTURBO_MODEL_LOCATION      = 'D:\rmasiso\PROJECTS\AI\models\sdxl-turbo'
-# SDXLL_MODEL_LOCATION          = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning"
-# SDXL_BASEMODEL_LOCATION       = "F:\Projects\BuildStuff2024_RTSD\models\stable-diffusion-xl-base-1.0"
-# SDXLL_CKPT_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\SDXL-Lightning\sdxl_lightning_2step_unet.safetensors" # Use the correct ckpt for your step setting!
-# SDXL_CANNY_CONTROLNET_LOCATION= "F:\Projects\BuildStuff2024_RTSD\models\controlnet-canny-sdxl-1.0"
-
-# ## SDXS 
-# SDXS_MODEL_LOCATION           = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper"
-# CONTROLNET_SKETCH_LOCATION    = "F:\Projects\BuildStuff2024_RTSD\models\sdxs-512-dreamshaper-sketch"
-
-
-# HYPERSD_MODEL_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD"
-# HYPERSD_UNET_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-Unet.safetensors"
-# HYPERSD_LORA_LOCATION         = "F:\Projects\BuildStuff2024_RTSD\models\Hyper-SD\Hyper-SDXL-1step-lora.safetensors"
-
-# SDXL_LCM_LORA_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\lcm-lora-sdxl"
-# SDXL_PAPERCUT_LOCATION        = "F:\Projects\BuildStuff2024_RTSD\models\Papercut_SDXL"
-# SDXL_MIDJOURNEYV16_LOCATION   = "F:\Projects\BuildStuff2024_RTSD\models\Midjourney-V6.1"
-# SDXL_AAM_XL_ANIMEMIX_LOCATION = "F:\Projects\BuildStuff2024_RTSD\models\AAM_XL_AnimeMix"
-
-
+# Available models list
 AVAILABLE_MODELS = [
-                    "canny",
-                    "Dreamshaper_v7_LCM_Canny",
-                    "Dreamshaper_v7_LCM_img2img", 
-                    "Dreamshaper_v8_LCM_Canny",
-                    "Dreamshaper_v8_LCM_img2img",
-                    "SDXL_Turbo",
-                    "SDXL_Lightning",
-                    "Hyper_SD",
-                    "SDXS",
-                    "Papercut_LCM-LoRA",
-                    "MidjourneyV1.6_LCM-LoRA",
-                    "AAM_XL_AnimeMix_LCM-LoRA",
-                    ]
+    "canny",
+    "Dreamshaper_v7_LCM_Canny",
+    "Dreamshaper_v7_LCM_img2img", 
+    "Dreamshaper_v8_LCM_Canny",
+    "Dreamshaper_v8_LCM_img2img",
+    "SDXL_Turbo",
+    "SDXL_Lightning",
+    "Hyper_SD",
+    "SDXS",
+    "Papercut_LCM-LoRA",
+    "MidjourneyV1.6_LCM-LoRA",
+    "AAM_XL_AnimeMix_LCM-LoRA",
+]
 
 #### OTHER CONSTANTS
 ###########
 
 # Global variable to store the processed image
-RAW_IMAGE              = None
-PROCESSED_IMAGE        = None
-SELECTED_IMAGES        = []
+RAW_IMAGE = None
+PROCESSED_IMAGE = None
+SELECTED_IMAGES = []
 
-SD_MODEL               = None
-LOADED_SD_MODEL        = None #cache of most recent loaded model so as not to reload if we go and change canny settings
-PIPELINE               = None
+SD_MODEL = None
+LOADED_SD_MODEL = None #cache of most recent loaded model so as not to reload if we go and change canny settings
+PIPELINE = None
 
-JSON_FILE_PATH         = 'parameters.json' #this is where the json files with model parameter info are located
-SAVE_FOLDER            = "output" # folder where output images are saved
-DPI                    = 300 # dots per inch / determined by device
-IMAGE_PREFIX           = "image"
-IMAGE_GALLERY_MAIN     = "image_gallery"
-IMAGE_GALLERY_LOCATION = "image_gallery/20241019_Session_000"
-OUTPUT_PREFIX          = "output"
-IMAGE_EXTENSIONS       = ['.png', '.jpeg', '.jpg', '.gif', '.bmp', '.tiff', '.webp']
-IMAGE_GALLERY_HEIGHT   = 100 # resolution of images inside gallery
+OUTPUT_PREFIX = "output"
+IMAGE_PREFIX = "image"
+IMAGE_EXTENSIONS = ['.png', '.jpeg', '.jpg', '.gif', '.bmp', '.tiff', '.webp']
 
-DYNAMIC_PARAMETERS     = ["RANDOM_SEED", "PROMPT", "WIDTH",'HEIGHT',"SD_MARKDOWN",'GUIDANCE_SCALE','INFERENCE_STEPS','NOISE_STRENGTH',
-                            'CONDITIONING_SCALE','GUIDANCE_START',"GUIDANCE_END", "CANNY_MARKDOWN", "CANNY_LOWER", "CANNY_UPPER", "CANNY_APERTURE", 
-                            "COLOR_INVERT", "ETA", "ZOOM"]
+DYNAMIC_PARAMETERS = [
+    "RANDOM_SEED", 
+    "PROMPT", 
+    "WIDTH",
+    'HEIGHT',
+    "SD_MARKDOWN",
+    'GUIDANCE_SCALE',
+    'INFERENCE_STEPS',
+    'NOISE_STRENGTH',
+    'CONDITIONING_SCALE',
+    'GUIDANCE_START',
+    "GUIDANCE_END", 
+    "CANNY_MARKDOWN", 
+    "CANNY_LOWER", 
+    "CANNY_UPPER", 
+    "CANNY_APERTURE", 
+    "COLOR_INVERT", 
+    "ETA", 
+    "ZOOM"
+]
 
 
-DEFAULT_PROMPT         = "portrait of a minion, wearing goggles, yellow skin, wearing a beanie, despicable me movie, in the style of pixar movie" #van gogh in the style of van gogh"
+DEFAULT_PROMPT = "portrait of a minion, wearing goggles, yellow skin, wearing a beanie, despicable me movie, in the style of pixar movie" #van gogh in the style of van gogh"
 
 
-mm2inch         = 25.4 # mm/inch
-inch2mm         = (1/25.4) # inch/mm
+mm2inch = 25.4 # mm/inch
+inch2mm = (1/25.4) # inch/mm
 
 
 ## initial parameters for gradio
-PARAMETER_STATE        = {
-                            "PROMPT": DEFAULT_PROMPT,
-                            "GUIDANCE_SCALE": 3,
-                            "INFERENCE_STEPS": 2,
-                            "DEFAULT_NOISE_STRENGTH": 0.7,
-                            "CONDITIONING_SCALE": 0.8,
-                            "GUIDANCE_START": 0.0,
-                            "GUIDANCE_END": 1.0,
-                            "RANDOM_SEED": 21,
-                            "HEIGHT": 512,
-                            "WIDTH": 512,
-                            "NOISE_STRENGTH" : 0.7,
-                            "CANNY_LOWER": 50,
-                            "CANNY_HIGHER": 150,
-                            "CANNY_APERTURE": 3,
-                            "COLOR_INVERT": False,
-                            "ETA" : 1.0,
-                            "ZOOM" : 1.0,
-                          }
+PARAMETER_STATE = {
+    "PROMPT": DEFAULT_PROMPT,
+    "GUIDANCE_SCALE": 3,
+    "INFERENCE_STEPS": 2,
+    "DEFAULT_NOISE_STRENGTH": 0.7,
+    "CONDITIONING_SCALE": 0.8,
+    "GUIDANCE_START": 0.0,
+    "GUIDANCE_END": 1.0,
+    "RANDOM_SEED": 21,
+    "HEIGHT": 512,
+    "WIDTH": 512,
+    "NOISE_STRENGTH" : 0.7,
+    "CANNY_LOWER": 50,
+    "CANNY_HIGHER": 150,
+    "CANNY_APERTURE": 3,
+    "COLOR_INVERT": False,
+    "ETA" : 1.0,
+    "ZOOM" : 1.0,
+}
 
+def update_config(section, key, value):
+    """
+    Update a specific value in the config file
+    
+    Args:
+        section (str): Section in config ('models', 'paths', or 'settings')
+        key (str): Key to update
+        value (str): New value
+    """
+    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    
+    # Load current config
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+    except FileNotFoundError:
+        config = {"models": {}, "paths": {}, "settings": {}}
+    
+    # Make sure section exists
+    if section not in config:
+        config[section] = {}
+    
+    # Update value
+    config[section][key] = value
+    
+    # Save updated config
+    with open(config_path, 'w') as f:
+        json.dump(config, f, indent=2)
+    
+    # Update global variable
+    globals()[key] = value
+    
+    return f"Updated {section}.{key} to {value}"
 
 ############
 ############ NEURAL NETWORK ENGINE STUFF
@@ -189,7 +226,7 @@ def choose_device(torch_device = None):
 
     return torch_device, torch_dtype
 
-TORCH_DEVICE, TORCH_DTYPE     = choose_device()  
+TORCH_DEVICE, TORCH_DTYPE = choose_device()  
 
 def flush():
     """
@@ -235,16 +272,6 @@ def extract_and_convert_list_to_int(text):
     cleaned_text = text.strip('[]')
     int_list = [int(item.strip()) for item in cleaned_text.split(',')]
     return int_list
-
-def mm2inch(source_system="metric", value=100):
-    if source_system=="metric":
-        # mm to inches
-        converted_val = value / 25.4
-    else: 
-        # inches to mm
-        converted_val = value * 25.4
-
-    return converted_val
 
 ############
 ############ IMAGE GALLERY STUFF
@@ -315,7 +342,7 @@ def StartNewSessionFolder(base_path=IMAGE_GALLERY_MAIN):
     return refresh_gallery()
 
 
-def NavigateGalleryFolders(previous_or_next):
+def navigateGalleryFolders(previous_or_next):
     """
     receives text that is "Previous" or "Next" to navigate photo booth sessions 
     """
@@ -352,14 +379,9 @@ def capture_and_save_images():
     """
     Capture and save 4 images to the gallery directory.
     """
-    # global RAW_IMAGE
-    # global PROCESSED_IMAGE
-    # global SAVED_IMAGES_INDEX
 
     if PROCESSED_IMAGE is not None:
         image_files = get_image_files(IMAGE_PREFIX, IMAGE_GALLERY_LOCATION)
-
-        # SAVED_IMAGES_INDEX = len(image_files) + 1
 
         raw_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+1:03d}.png")
         processed_img_path = os.path.join(IMAGE_GALLERY_LOCATION, f"{IMAGE_PREFIX}_{len(image_files)+2:03d}.png")
@@ -405,12 +427,12 @@ def create_photo_strip(nStrips, selected_images_idx_list, paper_width_mm, paper_
 
     ## ESTABLISH SIZING INFORMATION
 
-    paper_width_px      = int(paper_width_mm * dpi * inch2mm) # (mm * dots / inch) * (inch / mm) = dots = pixels
-    paper_height_px     = int(paper_height_mm * dpi * inch2mm)  # (mm * dots / inch) * (inch / mm) = dots = pixels
-    square_image_width  = int(paper_width_px / nStrips) # tells me how wide the pixels I have for each imageb
+    paper_width_px = int(paper_width_mm * dpi * inch2mm) # (mm * dots / inch) * (inch / mm) = dots = pixels
+    paper_height_px = int(paper_height_mm * dpi * inch2mm)  # (mm * dots / inch) * (inch / mm) = dots = pixels
+    square_image_width = int(paper_width_px / nStrips) # tells me how wide the pixels I have for each imageb
     square_image_height = int(paper_height_px / nPhotosPerStrip) # tells me how tall the images need to be to fit
-    square_image_size   = np.min([square_image_width, square_image_height]) # the minimum is usually gonna be based on how many can be fit vertically (when trying to maximize full sets/vertical strips to print)
-    scissor_padding     = ((paper_width_px - (square_image_size*nStrips)) / (nStrips - 1)) # how many square images fit with max image size to fit 3 vertically, then identify how the spacing available for cutting with scissors (nStrips-1)
+    square_image_size = np.min([square_image_width, square_image_height]) # the minimum is usually gonna be based on how many can be fit vertically (when trying to maximize full sets/vertical strips to print)
+    scissor_padding = ((paper_width_px - (square_image_size*nStrips)) / (nStrips - 1)) # how many square images fit with max image size to fit 3 vertically, then identify how the spacing available for cutting with scissors (nStrips-1)
 
     ## CREATE NEW IMAGE:
 
@@ -426,8 +448,8 @@ def create_photo_strip(nStrips, selected_images_idx_list, paper_width_mm, paper_
     # 2) stack the images into strip
 
     # single vertical strip
-    strip_width    = square_image_size
-    strip_height   = square_image_size * nPhotosPerStrip #(width, height) --> where width==height --> (width, width*3) for 3 photos per strip
+    strip_width = square_image_size
+    strip_height = square_image_size * nPhotosPerStrip #(width, height) --> where width==height --> (width, width*3) for 3 photos per strip
     vertical_strip = Image.new('RGB', (strip_width, strip_height))
 
     # Paste the three images into the vertical strip
@@ -442,9 +464,7 @@ def create_photo_strip(nStrips, selected_images_idx_list, paper_width_mm, paper_
     # Paste the vertical strips onto the paper
     for i in range(nStrips):
         padding = scissor_padding if i > 0 else 0
-        # print((393 + add)*i)
         paper.paste(vertical_strip, (int(strip_width+padding)*i, 0))
-    # paper.paste(vertical_strip, (i * strip_width, 0))
 
     # Save the final image to a file
     fnum = len(get_image_files(OUTPUT_PREFIX, save_folder)) + 1
@@ -551,35 +571,12 @@ def get_result_and_mask(frame, center_x, center_y, width, height):
 
     return frame, cutout
 
-
-# def prepare_lcm_pipeline(canny_location, lcm_location, i2i_type = "canny"):
-    
-#     if i2i_type=="canny":
-#         controlnet = ControlNetModel.from_pretrained(canny_location, torch_dtype=TORCH_DTYPE,
-#                                                 use_safetensors=True)
-        
-        
-
-#         pipeline = StableDiffusionControlNetPipeline.from_pretrained(lcm_location,\
-#                                                             controlnet=controlnet, 
-#                                                             # unet=unet,\
-#                                                             torch_dtype=TORCH_DTYPE, safety_checker=None).\
-#                                                         to(TORCH_DEVICE)
-#     elif i2i_type=="img2img":
-#         pipeline = AutoPipelineForImage2Image.from_pretrained(
-#                     lcm_location, torch_dtype=TORCH_DTYPE,
-#                     safety_checker=None).to(TORCH_DEVICE)
-        
-#     return pipeline
-
     
 def prepare_pipeline(model):
     global SD_MODEL 
     global PIPELINE
-    # global PARAMETER_STATE
-    # global PARAMETER_STATE_2
 
-    if model=="Dreamshaper_v7_LCM_Canny":
+    if model == "Dreamshaper_v7_LCM_Canny":
 
         # pipeline = prepare_lcm_pipeline(CONTROLNET_CANNY_LOCATION, LCM_Dv7_MODEL_LOCATION, "canny")
 
