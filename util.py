@@ -15,7 +15,7 @@ import platform
 import sys
 
 # diffusers objects
-from diffusers import (DiffusionPipeline, StableDiffusionPipeline, StableDiffusionXLPipeline, 
+from diffusers import (
                        AutoPipelineForImage2Image, StableDiffusionXLControlNetPipeline, 
                        StableDiffusionControlNetPipeline, ControlNetModel, UNet2DConditionModel, 
                        LCMScheduler, TCDScheduler )
@@ -289,10 +289,8 @@ def StartNewSessionFolder(base_path=IMAGE_GALLERY_MAIN):
     if sorted_folders:
         latest_folder = sorted_folders[0]
         latest_date_str, latest_session_str = folder_pattern.match(latest_folder).groups()
-        latest_date = datetime.strptime(latest_date_str, '%Y%m%d')
         latest_session = int(latest_session_str)
         
-       
         today_str = datetime.now().strftime('%Y%m%d')  # Check if the latest folder is from today
         if latest_date_str == today_str:
             new_session = latest_session + 1
@@ -440,12 +438,10 @@ def create_photo_strip(nStrips, selected_images_idx_list, paper_width_mm, paper_
     # Create a blank image for the paper
     paper = Image.new('RGB', (paper_width_px, paper_height_px), 'white')
 
-    # Calculate how many times the vertical strip can be repeated horizontally
-    num_repeats = paper_width_px // strip_width
 
     # Paste the vertical strips onto the paper
     for i in range(nStrips):
-        padding = scissor_padding if i >0 else 0
+        padding = scissor_padding if i > 0 else 0
         # print((393 + add)*i)
         paper.paste(vertical_strip, (int(strip_width+padding)*i, 0))
     # paper.paste(vertical_strip, (i * strip_width, 0))
@@ -1031,12 +1027,10 @@ def print_file(selected_printer):
     
     if system == "Windows":
         try:
-            import win32print
             import win32api
         except ModuleNotFoundError:
             print("win32print or win32api module not found. Installing pywin32...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", "pywin32"])
-            import win32print
             import win32api
         
         win32api.ShellExecute(0, "print", file_path, f'/d:"{selected_printer}"', ".", 0)

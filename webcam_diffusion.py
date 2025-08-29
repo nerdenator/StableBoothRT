@@ -4,11 +4,10 @@
 
 import cv2 as cv
 import numpy as np
-from PIL import Image, ImageFilter
-from diffusers import (AutoPipelineForImage2Image, StableDiffusionControlNetPipeline,
+from PIL import Image
+from diffusers import (StableDiffusionControlNetPipeline,
                        ControlNetModel)
 import torch
-import os
 
 def choose_device(torch_device = None):
     print('...Is CUDA available in your computer?',\
@@ -44,7 +43,7 @@ DEFAULT_PROMPT                = "van gogh in the style of van gogh"
 # DEFAULT_PROMPT                = "portrait of happy male toddler, baby, very cute, big eyes, kawaii, style of Pixar, Disney, 8k"
 # DEFAULT_PROMPT                = "portrait of stitch, baby, very cute, big eyes, kawaii, style of Pixar, Disney, 8k"
 
-MODEL                         = "lcm" #"lcm" 
+MODEL                         = "lcm"
 LCM_MODEL_LOCATION            = '/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/LCM_Dreamshaper_v7'
 CONTROLNET_CANNY_LOCATION     = "/Users/rolando/Documents/PROJECTS/YouTube/DIYAI_WebcamDiffusion/tutorial_scripts/models/control_v11p_sd15_canny" 
 TORCH_DEVICE, TORCH_DTYPE     = choose_device()  
